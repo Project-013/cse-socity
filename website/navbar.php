@@ -42,14 +42,24 @@ $row = mysqli_fetch_assoc($q)
                         <li class="nav-item">
                             <a href="index.php?page=gallery" class="nav-link <?php echo $current_page == 'gallery' ? 'active' : ''  ?>">Gallery</a>
                         </li>
+
+
+
                         <li class="nav-item">
-                            <a href="members.php" class="nav-link <?php echo $current_page == 'Find-members' ? 'active' : ''  ?>">Find members </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="blood-donor.php" class="nav-link <?php echo $current_page == 'Find-members' ? 'active' : ''  ?>">Find blood donor </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="campaigns.php" class="nav-link <?php echo $current_page == 'campaigns' ? 'active' : ''  ?>">Campaigns</a>
+                            <a href="#" class="nav-link dropdown-toggle">
+                                Others
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="nav-item">
+                                    <a href="campaigns.php" class="nav-link <?php echo $current_page == 'campaigns' ? 'active' : ''  ?>">Campaigns</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="blood-donor.php" class="nav-link ">Find blood donor </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="members.php" class="nav-link">Find members </a>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="nav-link dropdown-toggle  <?php echo $current_page == 'testimonial' || $current_page == 'about-us' || $current_page == 'faqs' || $current_page == 'privacy-policy' || $current_page == 'terms-condiitons' ? 'active' : ''  ?>">
