@@ -241,6 +241,10 @@ if ($admin == '') {
                         {
                             include 'campaigns/update.php';
                         }
+                        else if($page == 'publications')
+                        {
+                            include 'publications/index.php';
+                        }
 
                     } else {
                         include 'dashboard/dashboard.php';

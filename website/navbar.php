@@ -59,6 +59,9 @@ $row = mysqli_fetch_assoc($q)
                                 <li class="nav-item">
                                     <a href="members.php" class="nav-link">Find members </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="publications.php" class="nav-link">Research & Publications</a>
+                                </li>
                             </ul>
                         </li>
                         <li class="nav-item">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2023 at 08:41 AM
+-- Generation Time: Oct 29, 2023 at 06:41 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -398,6 +398,28 @@ INSERT INTO `posts` (`id`, `user_id`, `type`, `title`, `cover_image`, `tag`, `da
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `research`
+--
+
+CREATE TABLE `research` (
+  `id` int(10) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `description` text NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'pending',
+  `author` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `research`
+--
+
+INSERT INTO `research` (`id`, `title`, `url`, `description`, `status`, `author`) VALUES
+(1, 'Method of Adjacent Distance Array Outperforms Conventional Huffman Codes to Decode Bengali Transliterated Text Swiftly', 'https://journal.uob.edu.bh/handle/123456789/4498', 'This research works on high symbolic Bengali text and transforms it into corresponding less symbolic English complying with the transliteration method. The Huffman-based approaches serve to compress retaining the original quality of the data. On the other hand, faster encoding and decoding is the most sophisticated sphere in data compression. We propose an adjacent distance array, a novel data structure based on the Huffman principle for encoding and decoding the character of transliterated text. The encoding and decoding algorithms have been explained for the introduced modus operandi and juxtaposed with conventional Huffman-based algorithms. Our research is outdoing than any regular Huffman-based algorithms, concentrating on the speed of the encoding and decoding manner discovered after estimating all decisions.', 'approved', 'Sarker, Pranta; Rahman, Mir Lutfur');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `service`
 --
 
@@ -529,7 +551,6 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`UserID`, `email`, `name`, `mobile`, `password`, `birthday`, `gender`, `last_blood_donate`, `blood_group`, `address`, `interests`, `skills`, `user_type`) VALUES
 (1, 'joy@gmail.com', 'Joy', '1235', 'joy@gmail.com', '2023-09-21', 'male', '2023-09-20', 'B+', 'dsgdfg', 'ML, DL, DS, CP', 'C, Java', 'user'),
-(2, 'sajibsd013@gmail.com', 'Sajib Sutradhar', '+8801771147384', '$2y$10$V3u/l3ebOKfQwvY1cF9l/epDj2iKbbdrVIJgFE20.0Aku2QSzzem2', '2023-09-06', 'Male', '2023-09-13', 'O+', 'Sylhet\r\nSylhet', 'sdwad', 'dfgd', 'user'),
 (4, 'talha@gmail.com', 'Talha Ahmed', '13213214', '$2y$10$ElOVhJ3hnx5Zu7k3QwE6HumQqWzOS4owpIhIEFd9BpiHB/9D27BcC', '2023-09-13', 'Male', '2023-09-27', 'A+', 'Taltola, Sylhet', 'Web Dev', 'React, Django', 'user'),
 (5, 'mitu@gmail.com', 'Mitu Paul', '123456789', '$2y$10$cmilmARfZiYagya3ITeyV.4U.jcMhjQDCS9qrC/8RsizfNVClU9RO', '1998-12-28', 'Male', '2023-10-02', 'A+', 'Sylhet, Os\r\nSylhet', 'ML, Coding, DL', 'HTML, CSS, PHP, JS', 'user');
 
@@ -639,6 +660,12 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `research`
+--
+ALTER TABLE `research`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `service`
 --
 ALTER TABLE `service`
@@ -744,6 +771,12 @@ ALTER TABLE `photo_sliders`
 --
 ALTER TABLE `posts`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `research`
+--
+ALTER TABLE `research`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `service`
