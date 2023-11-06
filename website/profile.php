@@ -16,7 +16,7 @@ include '../database/database.php';
 
     <div class="faq-area my-3 mb-5">
         <?php
-        if ($_SESSION["UserID"]) {
+        if (isset($_SESSION["UserID"])) {
             $UserID = $_SESSION["UserID"];
         }
         if (isset($_GET["p"])) {
