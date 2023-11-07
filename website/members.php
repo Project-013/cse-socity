@@ -56,7 +56,18 @@ include '../database/database.php';
                             <div class='card shadow rounded'>
 
                                 <div class="card-body text-center">
-                                    <i class="fa fa-user-circle fa-4x text-primary mb-2"></i>
+                                           <?php
+                                                if ($row['img'] != "") {
+                                                ?>
+                                                    <img src="/cse-socity/website/img/<?php echo $row['img']  ?>" alt="nothing found" width="80" class="d-block mx-auto rounded-circle">
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <i class="fa fa-user-circle fa-4x text-primary mb-2" aria-hidden="true"></i>
+
+                                                <?php
+                                                }
+                                                ?>>
 
                                     <h6 class="card-title my-1"><?php echo $name ?></h6>
                                     <small class="card-text d-block text-muted"><?php echo $email ?></small>

@@ -18,6 +18,7 @@ if (isset($_POST['loginEmail'])) {
         $user_id = $row['UserID'];
         $name = $row['name'];
         $user_type = $row['user_type'];
+        $img = $row['img'];
         $user_pass_hash = $row['password'];
         $pass_decode = password_verify($password, $user_pass_hash);
         if ($pass_decode) {
@@ -25,6 +26,7 @@ if (isset($_POST['loginEmail'])) {
             $_SESSION["name"] =   $name;
             $_SESSION["UserID"] =   $user_id;
             $_SESSION["user_type"] = $user_type;
+            $_SESSION["img"] = $img;
             $redirect_url = "/cse-socity/website/";
             header("Location: $redirect_url");
         } else {
@@ -86,7 +88,10 @@ if (isset($_POST['loginEmail'])) {
                                 </div>
                                 <button type="submit" id="submit" class="btn btn-primary my-3 w-100 fw-bold">Login</button>
                             </form>
-                            <h6 style="cursor: pointer;" href="#" class="text-center text-primary">Forgotten password?</h6>
+                            <div class="text-center">
+                            <a style="cursor: pointer;" href="recover.php" class="text-center text-primary">Forgotten password?</a>
+
+                            </div>
                             <p class="text-center text-muted fw-bold">or</p>
                             <div class="d-flex justify-content-center">
                                 <a href="index.php?page=registration" class="btn btn-sm btn-success mx-auto  my-3 fw-bold ">Create new account</a>

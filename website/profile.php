@@ -32,27 +32,37 @@ include '../database/database.php';
             <div class="row">
                 <div class="col-lg-7 mx-auto bg-white shadow-lg rounded p-4 py-5">
                     <div class="text-center ">
-                        <i class="fa fa-user-circle fa-5x border border-success rounded-circle" aria-hidden="true"></i>
+
+                        <?php
+                        if ($row['img'] != "") {
+                        ?>
+                            <img src="/cse-socity/website/img/<?php echo $row['img']  ?>" alt="nothing found" width="150" class="d-block mx-auto rounded-circle">
+                        <?php
+                        } else {
+                        ?>
+                            <div>
+                            <i class="fa fa-user-circle fa-5x border border-success  rounded-circle" aria-hidden="true"></i>
+                            </div>
+
+                        <?php
+                        }
+                        ?>
+                        <a href="change-profile.php">change</a>
                         <h4 class="my-2 heading_color"><?php echo $row['name']  ?></h4>
 
                     </div>
                     <div class="row justify-content-center g-3 my-3">
                         <div class="pb-5">
-                            <form class="text-muted" onsubmit="submitForm(event,'<?php echo $action_url ?>')">
+                            <form class="text-muted">
                                 <div class="row g-2 justify-content-center">
 
                                     <div class="form-floating  col-md-6">
-                                        <input type="email" minlength="6" class="form-control border-0 bg-white " id="email" name="email" placeholder=" " value="<?php echo $row['email']  ?>" disabled>
+                                        <a class="form-control border-0 bg-white " href="mailto:<?php echo $row['email']  ?>"> <?php echo $row['email']  ?></a>
                                         <label for="email">Email address</label>
 
                                     </div>
                                     <div class="form-floating  col-md-6">
-                                        <input type="txet" minlength="7" class="form-control border-0 bg-white" id="mobile" name="mobile" placeholder=" " value="
-<?php if ($row['gender'] == 'Male') {
-    echo $row['mobile'];
-} else {
-    echo 'N/A';
-}  ?>" disabled>
+                                        <a class="form-control border-0 bg-white " href="tel:<?php echo $row['mobile']  ?>"> <?php echo $row['mobile']  ?></a>
                                         <label for="mobile">Phone Number</label>
 
                                     </div>

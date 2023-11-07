@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 29, 2023 at 06:41 PM
+-- Generation Time: Nov 07, 2023 at 02:28 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -542,17 +542,19 @@ CREATE TABLE `user` (
   `address` text DEFAULT NULL,
   `interests` text DEFAULT NULL,
   `skills` text DEFAULT NULL,
-  `user_type` varchar(255) DEFAULT 'user'
+  `user_type` varchar(255) DEFAULT 'user',
+  `img` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`UserID`, `email`, `name`, `mobile`, `password`, `birthday`, `gender`, `last_blood_donate`, `blood_group`, `address`, `interests`, `skills`, `user_type`) VALUES
-(1, 'joy@gmail.com', 'Joy', '1235', 'joy@gmail.com', '2023-09-21', 'male', '2023-09-20', 'B+', 'dsgdfg', 'ML, DL, DS, CP', 'C, Java', 'user'),
-(4, 'talha@gmail.com', 'Talha Ahmed', '13213214', '$2y$10$ElOVhJ3hnx5Zu7k3QwE6HumQqWzOS4owpIhIEFd9BpiHB/9D27BcC', '2023-09-13', 'Male', '2023-09-27', 'A+', 'Taltola, Sylhet', 'Web Dev', 'React, Django', 'user'),
-(5, 'mitu@gmail.com', 'Mitu Paul', '123456789', '$2y$10$cmilmARfZiYagya3ITeyV.4U.jcMhjQDCS9qrC/8RsizfNVClU9RO', '1998-12-28', 'Male', '2023-10-02', 'A+', 'Sylhet, Os\r\nSylhet', 'ML, Coding, DL', 'HTML, CSS, PHP, JS', 'user');
+INSERT INTO `user` (`UserID`, `email`, `name`, `mobile`, `password`, `birthday`, `gender`, `last_blood_donate`, `blood_group`, `address`, `interests`, `skills`, `user_type`, `img`) VALUES
+(1, 'joy@gmail.com', 'Joy', '1235', '$2y$10$nWWoIatsr68cUN8Zj3jw0uaZTd6LGYuKm8aOuQComdvMfazbOZLLq', '2023-09-21', 'Male', '2023-09-20', 'B+', 'dsgdfg', 'ML, DL, DS, CP', 'C, Java', 'user', NULL),
+(4, 'talha@gmail.com', 'Talha Ahmed', '13213214', '$2y$10$ElOVhJ3hnx5Zu7k3QwE6HumQqWzOS4owpIhIEFd9BpiHB/9D27BcC', '2023-09-13', 'Male', '2023-09-27', 'A+', 'Taltola, Sylhet', 'Web Dev', 'React, Django', 'user', NULL),
+(5, 'mitu@gmail.com', 'Mitu Paul', '123456789', '$2y$10$cmilmARfZiYagya3ITeyV.4U.jcMhjQDCS9qrC/8RsizfNVClU9RO', '1998-12-28', 'Male', '2023-10-02', 'A+', 'Sylhet, Os\r\nSylhet', 'ML, Coding, DL', 'HTML, CSS, PHP, JS', 'user', '396512382_1708945682933324_3365298834682639331_n.jpg'),
+(6, 'sajibsd013@gmail.com', 'Sajib Sutradhar', '+8801771147384', '$2y$10$ZOb.qrb5oYivo10.mE/w3eD7S0XGRXbW72YG6baFBJGUu3BzMbOie', '2023-11-07', 'Male', '0000-00-00', 'B+', 'Sylhet\r\nSylhet', 'sajibsd013@gmail.com', 'sajibsd013@gmail.com', 'user', NULL);
 
 -- --------------------------------------------------------
 
@@ -776,7 +778,7 @@ ALTER TABLE `posts`
 -- AUTO_INCREMENT for table `research`
 --
 ALTER TABLE `research`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `service`
@@ -806,7 +808,7 @@ ALTER TABLE `testimonial`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`

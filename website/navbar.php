@@ -104,7 +104,18 @@ $row = mysqli_fetch_assoc($q)
 
                             <span class="dropdown text-light">
                                 <button class="dropdown-toggle btn btn-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user-circle fa-2x text-primary "></i>
+                                <?php
+                                                if ($_SESSION['img'] != "") {
+                                                ?>
+                                                    <img src="/cse-socity/website/img/<?php echo $_SESSION['img']  ?>" alt="nothing found" width="50" height="50" class="d- mx-auto rounded-circle">
+                                                <?php
+                                                } else {
+                                                ?>
+                                                    <i class="fa fa-user-circle fa-2x text-primary mb-2" aria-hidden="true"></i>
+
+                                                <?php
+                                                }
+                                                ?>
 
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-end text-small" aria-labelledby="">
