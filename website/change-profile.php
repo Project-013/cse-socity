@@ -59,6 +59,10 @@ include '../database/database.php';
 
     <div class="faq-area my-3 mb-5">
         <div class="container">
+            <?php
+            if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true) {
+
+            ?>
 
 
             <section class="container section_top">
@@ -84,6 +88,12 @@ include '../database/database.php';
                     </div>
                 </div>
             </section>
+
+            <?php
+            }
+
+            ?>
+
         </div>
 
     </div>

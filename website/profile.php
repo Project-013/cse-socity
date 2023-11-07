@@ -41,13 +41,22 @@ include '../database/database.php';
                         } else {
                         ?>
                             <div>
-                            <i class="fa fa-user-circle fa-5x border border-success  rounded-circle" aria-hidden="true"></i>
+                                <i class="fa fa-user-circle fa-5x border border-success  rounded-circle" aria-hidden="true"></i>
                             </div>
 
                         <?php
                         }
                         ?>
-                        <a href="change-profile.php">change</a>
+                        <?php
+                        if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] == true && !isset($_GET["p"])) {
+
+                        ?>
+                            <a href="change-profile.php" class="small">change</a>
+
+                        <?php
+                        }
+
+                        ?>
                         <h4 class="my-2 heading_color"><?php echo $row['name']  ?></h4>
 
                     </div>
@@ -57,12 +66,17 @@ include '../database/database.php';
                                 <div class="row g-2 justify-content-center">
 
                                     <div class="form-floating  col-md-6">
-                                        <a class="form-control border-0 bg-white " href="mailto:<?php echo $row['email']  ?>"> <?php echo $row['email']  ?></a>
+                                        <a class="form-control border-0 bg-white " href="mailto:<?php echo $row['email']  ?>">
+                                        <i class="fa fa-envelope  "></i>
+                                        <?php echo $row['email']  ?></a>
                                         <label for="email">Email address</label>
 
                                     </div>
                                     <div class="form-floating  col-md-6">
-                                        <a class="form-control border-0 bg-white " href="tel:<?php echo $row['mobile']  ?>"> <?php echo $row['mobile']  ?></a>
+                                        <a class="form-control border-0 bg-white " href="tel:<?php echo $row['mobile']  ?>">
+                                        <i class="fa fa-phone    "></i>
+                                        
+                                        <?php echo $row['mobile']  ?></a>
                                         <label for="mobile">Phone Number</label>
 
                                     </div>
