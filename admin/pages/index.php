@@ -245,6 +245,10 @@ if ($admin == '') {
                         {
                             include 'publications/index.php';
                         }
+                        else if($page == 'others')
+                        {
+                            include 'others/index.php';
+                        }
 
                     } else {
                         include 'dashboard/dashboard.php';
