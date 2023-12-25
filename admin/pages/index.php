@@ -249,6 +249,10 @@ if ($admin == '') {
                         {
                             include 'others/index.php';
                         }
+                        else if($page == 'projects')
+                        {
+                            include 'projects/index.php';
+                        }
 
                     } else {
                         include 'dashboard/dashboard.php';

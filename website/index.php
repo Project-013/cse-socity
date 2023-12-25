@@ -70,6 +70,7 @@ include '../database/database.php'; ?>
     }
     ?>
 
+    <?php include 'partials/_others.php'; ?>
     <?php include 'footer.php'; ?>
     <?php include 'footer-link.php'; ?>
 </body>
