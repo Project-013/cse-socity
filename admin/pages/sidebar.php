@@ -178,6 +178,22 @@ else {
                     </ul>
                 </li>
                 <?php } ?>
+                <?php if ($showSidebar1 || $_SESSION['role_id'] == 1) { ?>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="ti-user"></i>
+                        <span class="hide-menu">Forum</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a href="index.php?page=forum">post</a>
+                        </li>
+                        <li>
+                            <a href="index.php?page=comment">comment</a>
+                        </li>
+                    </ul>
+                </li>
+                <?php } ?>
 
 
                 <?php if ($showSidebar2 || $_SESSION['role_id'] == 1) { ?>

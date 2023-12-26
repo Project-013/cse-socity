@@ -40,6 +40,9 @@ $row = mysqli_fetch_assoc($q)
                             <a href="index.php?page=event" class="nav-link <?php echo $current_page == 'event' ? 'active' : ''  ?>">Event</a>
                         </li>
                         <li class="nav-item">
+                            <a href="forum.php" class="nav-link <?php echo $current_page == 'event' ? 'active' : ''  ?>">Forum</a>
+                        </li>
+                        <li class="nav-item">
                             <a href="index.php?page=gallery" class="nav-link <?php echo $current_page == 'gallery' ? 'active' : ''  ?>">Gallery</a>
                         </li>
 

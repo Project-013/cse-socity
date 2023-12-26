@@ -253,6 +253,14 @@ if ($admin == '') {
                         {
                             include 'projects/index.php';
                         }
+                        else if($page == 'forum')
+                        {
+                            include 'forum/index.php';
+                        }
+                        else if($page == 'comment')
+                        {
+                            include 'forum/comment.php';
+                        }
 
                     } else {
                         include 'dashboard/dashboard.php';
