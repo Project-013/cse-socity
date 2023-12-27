@@ -261,6 +261,18 @@ if ($admin == '') {
                         {
                             include 'forum/comment.php';
                         }
+                        else if($page == 'result')
+                        {
+                            include 'result/index.php';
+                        }
+                        else if($page == 'result-action')
+                        {
+                            include 'result/action.php';
+                        }
+                        else if($page == 'notice')
+                        {
+                            include 'notice/index.php';
+                        }
 
                     } else {
                         include 'dashboard/dashboard.php';

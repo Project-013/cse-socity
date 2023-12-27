@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 07, 2023 at 02:28 PM
+-- Generation Time: Dec 27, 2023 at 01:47 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -182,6 +182,28 @@ INSERT INTO `campaigns` (`CampaignID`, `title`, `img`, `goals`, `raised`, `descr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `CommentID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `ForumID` int(11) NOT NULL,
+  `comment` text NOT NULL,
+  `timestand` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`CommentID`, `UserID`, `ForumID`, `comment`, `timestand`) VALUES
+(6, 5, 16, 'wer', '2023-12-26 06:38:01'),
+(10, 1, 16, 'uu', '2023-12-26 07:17:42');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contact_us`
 --
 
@@ -261,6 +283,49 @@ INSERT INTO `features` (`id`, `name`, `status`, `created_at`, `updated_at`) VALU
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+  `id` int(11) NOT NULL,
+  `details` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `feedback`
+--
+
+INSERT INTO `feedback` (`id`, `details`) VALUES
+(1, 'Test');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forum`
+--
+
+CREATE TABLE `forum` (
+  `ForumID` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `short_description` varchar(255) NOT NULL,
+  `status` varchar(10) NOT NULL DEFAULT 'pending',
+  `timestand` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `forum`
+--
+
+INSERT INTO `forum` (`ForumID`, `title`, `UserID`, `description`, `short_description`, `status`, `timestand`) VALUES
+(16, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'approved', '2023-12-26 05:37:42'),
+(17, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'approved', '2023-12-26 05:37:54'),
+(18, 'r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.', 1, 'r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.', 'r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.', 'approved', '2023-12-26 06:50:21');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `gallery`
 --
 
@@ -326,6 +391,49 @@ INSERT INTO `members` (`id`, `type`, `avatar`, `name`, `email`, `phone`, `design
 (20, 'faculty', 'uploads/members/faculty/Shahadat_Hussain_Parvej.jpg', 'Shahadat  Hussain Parvej', 'abc4@gmail.com', '01**********', 'Assistant Professor ', NULL, NULL, NULL, 'NEUB', '', '', NULL, 1),
 (21, 'alumni', 'uploads/members/alumni/Ayon-Dey.jpg', 'Ayon Dey', 'ayon@gmail.com', '01**********', 'Lecturer(Present)', '20 january 2017 - 31 december 2021', NULL, NULL, 'NEUB', '', '', NULL, 1),
 (22, 'alumni', 'uploads/members/alumni/Khadem-Mohammad-Asif-uz-zaman.jpg', 'Khadem Mohammad Asif-uz-zaman', 'asif@gmail.com', '01***********', 'Lecturer(Present)', '20 january 201* - 31 december 202*', NULL, NULL, 'NEUB', '', '', NULL, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `newslatter`
+--
+
+CREATE TABLE `newslatter` (
+  `id` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `newslatter`
+--
+
+INSERT INTO `newslatter` (`id`, `email`) VALUES
+(1, 'admin@gmail.com'),
+(8, 'sajibsd013@gmail.com'),
+(9, 'sajibsd0131@gmail.com'),
+(10, 'sajibsd01322@gmail.com'),
+(11, 'saji22bsd013@gmail.com');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `notice`
+--
+
+CREATE TABLE `notice` (
+  `NoticeID` int(11) NOT NULL,
+  `notice` text NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
+  `title` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `notice`
+--
+
+INSERT INTO `notice` (`NoticeID`, `notice`, `timestamp`, `title`) VALUES
+(2, 'Notice of Holy ChristmasNotice of Holy ChristmasNotice of Holy ChristmasNotice of Holy ChristmasNotice of Holy ChristmasNotice of Holy ChristmasNotice of Holy Christmas', '2023-12-27 12:16:21', 'Notice of Holy Christmas'),
+(4, 'Notice of Holy ChristmasNotice of Holy ChristmasNotice of Holy Christmas', '2023-12-27 12:31:22', 'Notice of Holy ChristmasNotice of Holy Christmas');
 
 -- --------------------------------------------------------
 
@@ -398,6 +506,32 @@ INSERT INTO `posts` (`id`, `user_id`, `type`, `title`, `cover_image`, `tag`, `da
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `projects`
+--
+
+CREATE TABLE `projects` (
+  `ProjectID` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `author` varchar(255) NOT NULL,
+  `status` varchar(255) NOT NULL DEFAULT 'pending',
+  `live_url` varchar(255) DEFAULT NULL,
+  `git_url` varchar(255) DEFAULT NULL,
+  `img` varchar(255) DEFAULT NULL,
+  `technology` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `projects`
+--
+
+INSERT INTO `projects` (`ProjectID`, `title`, `description`, `author`, `status`, `live_url`, `git_url`, `img`, `technology`) VALUES
+(4, 'Demo Project', 'A list of commonly used Git commandsA list of commonly used Git commands , A list of commonly used Git commandsA list of commonly used Git commandsA list of commonly used Git commands', 'Mr XYZ', 'approved', 'https://github.com/joshnh', 'https://github.com/joshnh/Git-Commands', NULL, 'C++, Java'),
+(5, 'Demo Project', 'A list of commonly used Git commandsA list of commonly used Git commands , A list of commonly used Git commandsA list of commonly used Git commandsA list of commonly used Git commands', 'Mr XYZ', 'pending', 'https://github.com/joshnh', 'https://github.com/joshnh/Git-Commands', NULL, 'C++, Java');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `research`
 --
 
@@ -416,6 +550,33 @@ CREATE TABLE `research` (
 
 INSERT INTO `research` (`id`, `title`, `url`, `description`, `status`, `author`) VALUES
 (1, 'Method of Adjacent Distance Array Outperforms Conventional Huffman Codes to Decode Bengali Transliterated Text Swiftly', 'https://journal.uob.edu.bh/handle/123456789/4498', 'This research works on high symbolic Bengali text and transforms it into corresponding less symbolic English complying with the transliteration method. The Huffman-based approaches serve to compress retaining the original quality of the data. On the other hand, faster encoding and decoding is the most sophisticated sphere in data compression. We propose an adjacent distance array, a novel data structure based on the Huffman principle for encoding and decoding the character of transliterated text. The encoding and decoding algorithms have been explained for the introduced modus operandi and juxtaposed with conventional Huffman-based algorithms. Our research is outdoing than any regular Huffman-based algorithms, concentrating on the speed of the encoding and decoding manner discovered after estimating all decisions.', 'approved', 'Sarker, Pranta; Rahman, Mir Lutfur');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `results`
+--
+
+CREATE TABLE `results` (
+  `ResultID` int(11) NOT NULL,
+  `StudentID` varchar(100) NOT NULL,
+  `Name` varchar(255) NOT NULL,
+  `Program` varchar(255) NOT NULL,
+  `CourseCode` varchar(255) NOT NULL,
+  `CourseTitle` varchar(255) NOT NULL,
+  `Credit` varchar(10) NOT NULL,
+  `Ecr` varchar(10) NOT NULL,
+  `LetterGrade` varchar(10) NOT NULL,
+  `GradePoint` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `results`
+--
+
+INSERT INTO `results` (`ResultID`, `StudentID`, `Name`, `Program`, `CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`) VALUES
+(7, '1901030200113', 'Sajib Sutradhar', 'BSc. (Engg.) in CSE', 'CSE-101', 'Computer', '3.00', '3.00', 'B+', '3.25'),
+(9, '1901030200113', 'Sajib Sutradhar', 'BSc. (Engg.) in CSE', 'CSE-101', 'Computer', '3.00', '3.00', 'A+', '4.00');
 
 -- --------------------------------------------------------
 
@@ -553,8 +714,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`UserID`, `email`, `name`, `mobile`, `password`, `birthday`, `gender`, `last_blood_donate`, `blood_group`, `address`, `interests`, `skills`, `user_type`, `img`) VALUES
 (1, 'joy@gmail.com', 'Joy', '1235', '$2y$10$nWWoIatsr68cUN8Zj3jw0uaZTd6LGYuKm8aOuQComdvMfazbOZLLq', '2023-09-21', 'Male', '2023-09-20', 'B+', 'dsgdfg', 'ML, DL, DS, CP', 'C, Java', 'user', NULL),
 (4, 'talha@gmail.com', 'Talha Ahmed', '13213214', '$2y$10$ElOVhJ3hnx5Zu7k3QwE6HumQqWzOS4owpIhIEFd9BpiHB/9D27BcC', '2023-09-13', 'Male', '2023-09-27', 'A+', 'Taltola, Sylhet', 'Web Dev', 'React, Django', 'user', NULL),
-(5, 'mitu@gmail.com', 'Mitu Paul', '123456789', '$2y$10$cmilmARfZiYagya3ITeyV.4U.jcMhjQDCS9qrC/8RsizfNVClU9RO', '1998-12-28', 'Male', '2023-10-02', 'A+', 'Sylhet, Os\r\nSylhet', 'ML, Coding, DL', 'HTML, CSS, PHP, JS', 'user', '396512382_1708945682933324_3365298834682639331_n.jpg'),
-(6, 'sajibsd013@gmail.com', 'Sajib Sutradhar', '+8801771147384', '$2y$10$ZOb.qrb5oYivo10.mE/w3eD7S0XGRXbW72YG6baFBJGUu3BzMbOie', '2023-11-07', 'Male', '0000-00-00', 'B+', 'Sylhet\r\nSylhet', 'sajibsd013@gmail.com', 'sajibsd013@gmail.com', 'user', NULL);
+(5, 'mitu@gmail.com', 'Mitu Paul', '123456789', '$2y$10$cmilmARfZiYagya3ITeyV.4U.jcMhjQDCS9qrC/8RsizfNVClU9RO', '1998-12-28', 'Male', '2023-10-02', 'A+', 'Sylhet, Os\r\nSylhet', 'ML, Coding, DL', 'HTML, CSS, PHP, JS', 'user', '396512382_1708945682933324_3365298834682639331_n.jpg');
 
 -- --------------------------------------------------------
 
@@ -620,6 +780,12 @@ ALTER TABLE `campaigns`
   ADD PRIMARY KEY (`CampaignID`);
 
 --
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
+  ADD PRIMARY KEY (`CommentID`);
+
+--
 -- Indexes for table `contact_us`
 --
 ALTER TABLE `contact_us`
@@ -638,6 +804,18 @@ ALTER TABLE `features`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `feedback`
+--
+ALTER TABLE `feedback`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `forum`
+--
+ALTER TABLE `forum`
+  ADD PRIMARY KEY (`ForumID`);
+
+--
 -- Indexes for table `gallery`
 --
 ALTER TABLE `gallery`
@@ -648,6 +826,18 @@ ALTER TABLE `gallery`
 --
 ALTER TABLE `members`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `newslatter`
+--
+ALTER TABLE `newslatter`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `notice`
+--
+ALTER TABLE `notice`
+  ADD PRIMARY KEY (`NoticeID`);
 
 --
 -- Indexes for table `photo_sliders`
@@ -662,10 +852,22 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `projects`
+--
+ALTER TABLE `projects`
+  ADD PRIMARY KEY (`ProjectID`);
+
+--
 -- Indexes for table `research`
 --
 ALTER TABLE `research`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `results`
+--
+ALTER TABLE `results`
+  ADD PRIMARY KEY (`ResultID`);
 
 --
 -- Indexes for table `service`
@@ -733,6 +935,12 @@ ALTER TABLE `campaigns`
   MODIFY `CampaignID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `contact_us`
 --
 ALTER TABLE `contact_us`
@@ -751,6 +959,18 @@ ALTER TABLE `features`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
+-- AUTO_INCREMENT for table `feedback`
+--
+ALTER TABLE `feedback`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `forum`
+--
+ALTER TABLE `forum`
+  MODIFY `ForumID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
 -- AUTO_INCREMENT for table `gallery`
 --
 ALTER TABLE `gallery`
@@ -761,6 +981,18 @@ ALTER TABLE `gallery`
 --
 ALTER TABLE `members`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `newslatter`
+--
+ALTER TABLE `newslatter`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+
+--
+-- AUTO_INCREMENT for table `notice`
+--
+ALTER TABLE `notice`
+  MODIFY `NoticeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `photo_sliders`
@@ -775,10 +1007,22 @@ ALTER TABLE `posts`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
+-- AUTO_INCREMENT for table `projects`
+--
+ALTER TABLE `projects`
+  MODIFY `ProjectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `research`
 --
 ALTER TABLE `research`
   MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `results`
+--
+ALTER TABLE `results`
+  MODIFY `ResultID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `service`

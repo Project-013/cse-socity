@@ -45,6 +45,9 @@ $row = mysqli_fetch_assoc($q)
                         <li class="nav-item">
                             <a href="index.php?page=gallery" class="nav-link <?php echo $current_page == 'gallery' ? 'active' : ''  ?>">Gallery</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="notice.php" class="nav-link">Notice</a>
+                        </li>
 
 
 
@@ -67,6 +70,9 @@ $row = mysqli_fetch_assoc($q)
                                 </li>
                                 <li class="nav-item">
                                     <a href="projects.php" class="nav-link">Projects</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="result.php" class="nav-link">Result</a>
                                 </li>
                             </ul>
                         </li>

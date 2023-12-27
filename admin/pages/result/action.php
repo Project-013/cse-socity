@@ -1,0 +1,219 @@
+<?php
+
+$gradeRanges = [
+    'A+' => "4.00",
+    'A' => "3.75",
+    'A-' => "3.50",
+    'B+' => "3.25",
+    'B' => "3.00",
+    'B-' => "2.75",
+    'C+' => "2.50",
+    'C' => "2.25",
+    'F' => "0.00",
+];
+
+
+if (isset($_POST['StudentID'])) {
+    $StudentID =  $_POST['StudentID'];
+    $Name =  $_POST['Name'];
+    $Program =  $_POST['Program'];
+    $CourseCode =  $_POST['CourseCode'];
+    $CourseTitle =  $_POST['CourseTitle'];
+    $Credit =  $_POST['Credit'];
+    $Ecr =  $_POST['Ecr'];
+    // $GradePoint =  $_POST['GradePoint'];
+    $LetterGrade =  $_POST['LetterGrade'];
+    $GradePoint = $gradeRanges[$LetterGrade];
+
+
+    $sql = "INSERT INTO `results`(`StudentID`, `Name`, `Program`, `CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`) VALUES ('$StudentID','$Name',' $Program','$CourseCode','$CourseTitle','$Credit','$Ecr','$LetterGrade','$GradePoint')";
+
+    if (isset($_GET['ResultID'])) {
+        $UpdateResultID = $_GET['ResultID'];
+
+        $sql = "UPDATE `results` SET `StudentID`='$StudentID',`Name`='$Name',`Program`='$Program',`CourseCode`='$CourseCode',`CourseTitle`='$CourseTitle',`Credit`='$Credit',`Ecr`='$Ecr',`LetterGrade`='$LetterGrade',`GradePoint`='$GradePoint' WHERE `ResultID`='$UpdateResultID'";
+    }
+
+
+
+    $result = mysqli_query($conn, $sql);
+}
+
+// if (isset($_FILES['csv'])) {
+//     if ($_FILES["csv"]["error"] > 0) {
+//         echo "Error: " . $_FILES["csv"]["error"];
+//     } else {
+//         // Read CSV file
+//         $file = $_FILES["csv"]["tmp_name"];
+//         $handle = fopen($file, "r");
+
+//         // Process CSV data
+//         while (($data = fgetcsv($handle)) !== false) {
+//             $StudentID =  $data[0];
+//             $Name = $data[1];
+//             $Program =  $data[2];
+//             $CourseCode = $data[3];
+//             $CourseTitle =  $data[4];
+//             $Credit = $data[5];
+//             $Ecr = $data[6];
+//             // $GradePoint =  $_POST['GradePoint'];
+//             $LetterGrade = $data[7];
+//             $GradePoint = $data[8];
+//             // Add more columns as needed
+//             $sql = "INSERT INTO `results`(`StudentID`, `Name`, `Program`, `CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`) VALUES ('$StudentID','$Name',' $Program','$CourseCode','$CourseTitle','$Credit','$Ecr','$LetterGrade','$GradePoint')";
+
+//             $result = mysqli_query($conn, $sql);
+
+//         }
+
+//         // Close file handle
+//         fclose($handle);
+//     }
+
+// }
+
+
+
+
+if (isset($result)) {
+
+?>
+    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
+        Success
+    </div>
+<?php
+
+}
+
+
+
+if (isset($_GET['ResultID'])) {
+    $UpdateResultID = $_GET['ResultID'];
+
+    $sql_result = "SELECT * FROM `results` WHERE `ResultID`=$UpdateResultID";
+    $result2 = mysqli_query($conn, $sql_result);
+
+    $row3 = mysqli_fetch_assoc($result2);
+}
+
+
+?>
+
+
+<div class="row justify-content-center g-3 my-2 ">
+    <div class="col-md-9 bg-white shadow-lg rounded p-4">
+        <h3 class="heading_color mb-4"> <?php if (isset($UpdateResultID)) {
+                                            echo "Updete";
+                                        } else echo "Add" ?> Result</h3>
+        <form action="" method="post" class="row">
+            <div class="form-group col-md-4">
+                <label for="StudentID">Student ID</label>
+                <input type="text" class="form-control form-control-sm" id="StudentID" name="StudentID" placeholder=" " 
+                
+                value="<?php if (isset($row3['StudentID'])) {
+                                                                                                                                    echo $row3['StudentID'];
+                                                                                                                                } ?>" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="Name">Name</label>
+                <input type="text" class="form-control form-control-sm" id="Name" name="Name" placeholder=" " value="<?php if (isset($row3['Name'])) {
+                                                                                                                            echo $row3['Name'];
+                                                                                                                        } ?>" required>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="Program">Program</label>
+                <input type="text" class="form-control form-control-sm" id="Program" name="Program" placeholder=" " required value="BSc. (Engg.) in CSE">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="CourseCode">Course Code</label>
+                <input type="text" class="form-control form-control-sm" id="CourseCode" name="CourseCode" placeholder=" " required value="<?php if (isset($row3['CourseCode'])) {
+                                                                                                                                                echo $row3['CourseCode'];
+                                                                                                                                            } ?>">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="CourseTitle">Course Title</label>
+                <input type="text" class="form-control form-control-sm" id="CourseTitle" name="CourseTitle" placeholder=" " required value="<?php if (isset($row3['CourseTitle'])) {
+                                                                                                                                                echo $row3['CourseTitle'];
+                                                                                                                                            } ?>">
+            </div>
+            <div class="form-group col-md-4">
+                <label for="Credit">Credit</label>
+                <input type="text" class="form-control form-control-sm" id="Credit" name="Credit" placeholder=" " required list="CreditList" value="<?php if (isset($row3['Credit'])) {
+                                                                                                                                                        echo $row3['Credit'];
+                                                                                                                                                    } ?>">
+                <datalist id="CreditList">
+                    <option>3.00</option>
+                    <option>2.00</option>
+                    <option>1.50</option>
+                    <option>0.00</option>
+                </datalist>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="Credit">Ecr</label>
+                <input type="text" class="form-control form-control-sm" id="Ecr" name="Ecr" placeholder=" " required list="CreditList" value="<?php if (isset($row3['Ecr'])) {
+                                                                                                                                                    echo $row3['Ecr'];
+                                                                                                                                                } ?>">
+                <datalist id="CreditList">
+                    <option>3.00</option>
+                    <option>2.00</option>
+                    <option>1.50</option>
+                    <option>0.00</option>
+                </datalist>
+            </div>
+            <!-- <div class="form-group col-md-4 d-none">
+                <label for="GradePoint">Grade Point</label>
+                <input type="text" class="form-control form-control-sm" id="GradePoint" name="GradePoint" placeholder=" " required list="PointList" >
+                <datalist id="PointList">
+                    <option>4.00</option>
+                    <option>3.75</option>
+                    <option>3.50</option>
+                    <option>3.25</option>
+                    <option>3.00</option>
+                    <option>2.75</option>
+                    <option>2.50</option>
+                    <option>2.25</option>
+                    <option>2.00</option>
+                    <option>0.00</option>
+                </datalist>
+            </div> -->
+            <div class="form-group col-md-4 ">
+                <label for="LetterGrade">Letter Grade</label>
+                <input type="text" class="form-control form-control-sm" id="LetterGrade" list="LetterGradeList" name="LetterGrade" placeholder=" " required value="<?php if (isset($row3['LetterGrade'])) {
+                                                                                                                                                                        echo $row3['LetterGrade'];
+                                                                                                                                                                    } ?>">
+                <datalist id="LetterGradeList">
+                    <option>A+</option>
+                    <option>A</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B</option>
+                    <option>B-</option>
+                    <option>C+</option>
+                    <option>C</option>
+                    <option>D</option>
+                    <option>F</option>
+                </datalist>
+            </div>
+
+
+
+            <button type="submit" id="submit" class="btn btn-dark btn-sm my-3  fw-bold">
+
+                <?php if (isset($UpdateResultID)) {
+                    echo "Updete";
+                } else echo "Add" ?>
+            </button>
+        </form>
+        <!-- 
+        <h6>or</h6>
+
+        <form action="" method="post" class="my-5">
+            <div class="mb-3">
+                <h4 class="mb-3">Upload CSV</h4>
+                <input type="file" name="csv" id="csv" accept=".csv">
+            </div>
+            <button class="btn btn-primary">Submit</button>
+        </form> -->
+    </div>
+
+</div>

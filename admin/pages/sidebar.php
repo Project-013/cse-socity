@@ -156,6 +156,32 @@ else {
                 <li>
                     <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
                         <i class="ti-user"></i>
+                        <span class="hide-menu">Result</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a href="index.php?page=result">Results</a>
+                        </li>
+                    </ul>
+                </li>
+                <?php } ?>
+                <?php if ($showSidebar1 || $_SESSION['role_id'] == 1) { ?>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="ti-user"></i>
+                        <span class="hide-menu">Notice</span>
+                    </a>
+                    <ul aria-expanded="false" class="collapse">
+                        <li>
+                            <a href="index.php?page=notice">Notice</a>
+                        </li>
+                    </ul>
+                </li>
+                <?php } ?>
+                <?php if ($showSidebar1 || $_SESSION['role_id'] == 1) { ?>
+                <li>
+                    <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                        <i class="ti-user"></i>
                         <span class="hide-menu">Publications</span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
