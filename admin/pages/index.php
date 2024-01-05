@@ -273,6 +273,14 @@ if ($admin == '') {
                         {
                             include 'notice/index.php';
                         }
+                        else if($page == 'student')
+                        {
+                            include 'student/index.php';
+                        }
+                        else if($page == 'student-action')
+                        {
+                            include 'student/action.php';
+                        }
 
                     } else {
                         include 'dashboard/dashboard.php';

@@ -1,5 +1,7 @@
 <?php
 
+
+
 $gradeRanges = [
     'A+' => "4.00",
     'A' => "3.75",
@@ -15,8 +17,7 @@ $gradeRanges = [
 
 if (isset($_POST['StudentID'])) {
     $StudentID =  $_POST['StudentID'];
-    $Name =  $_POST['Name'];
-    $Program =  $_POST['Program'];
+    $Semester =  $_POST['Semester'];
     $CourseCode =  $_POST['CourseCode'];
     $CourseTitle =  $_POST['CourseTitle'];
     $Credit =  $_POST['Credit'];
@@ -26,12 +27,12 @@ if (isset($_POST['StudentID'])) {
     $GradePoint = $gradeRanges[$LetterGrade];
 
 
-    $sql = "INSERT INTO `results`(`StudentID`, `Name`, `Program`, `CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`) VALUES ('$StudentID','$Name',' $Program','$CourseCode','$CourseTitle','$Credit','$Ecr','$LetterGrade','$GradePoint')";
+    $sql = "INSERT INTO `results`(`StudentID`, `Semester`,  `CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`) VALUES ('$StudentID','$Semester','$CourseCode','$CourseTitle','$Credit','$Ecr','$LetterGrade','$GradePoint')";
 
     if (isset($_GET['ResultID'])) {
         $UpdateResultID = $_GET['ResultID'];
 
-        $sql = "UPDATE `results` SET `StudentID`='$StudentID',`Name`='$Name',`Program`='$Program',`CourseCode`='$CourseCode',`CourseTitle`='$CourseTitle',`Credit`='$Credit',`Ecr`='$Ecr',`LetterGrade`='$LetterGrade',`GradePoint`='$GradePoint' WHERE `ResultID`='$UpdateResultID'";
+        $sql = "UPDATE `results` SET `StudentID`='$StudentID',`Semester`='$Semester',`CourseCode`='$CourseCode',`CourseTitle`='$CourseTitle',`Credit`='$Credit',`Ecr`='$Ecr',`LetterGrade`='$LetterGrade',`GradePoint`='$GradePoint' WHERE `ResultID`='$UpdateResultID'";
     }
 
 
@@ -108,22 +109,32 @@ if (isset($_GET['ResultID'])) {
         <form action="" method="post" class="row">
             <div class="form-group col-md-4">
                 <label for="StudentID">Student ID</label>
-                <input type="text" class="form-control form-control-sm" id="StudentID" name="StudentID" placeholder=" " 
-                
-                value="<?php if (isset($row3['StudentID'])) {
+                <input type="text" class="form-control form-control-sm" id="StudentID" name="StudentID" placeholder=" " value="<?php if (isset($row3['StudentID'])) {
                                                                                                                                     echo $row3['StudentID'];
+                                                                                                                                } ?>" list="StudentList" required>
+                <datalist id="StudentList">
+
+                    <?php
+
+                    $sql_student = "SELECT * FROM `student` ORDER BY  `StudentID` DESC";
+                    $result_student = mysqli_query($conn, $sql_student);
+                    while ($row_student = mysqli_fetch_assoc($result_student)) {
+                    ?>
+                        <option><?php echo $row_student['StudentID'] ?></option>
+                    <?php
+                    }
+                    ?>
+                </datalist>
+
+
+            </div>
+            <div class="form-group col-md-4">
+                <label for="Name">Semester</label>
+                <input type="text" class="form-control form-control-sm" id="Semester" name="Semester" placeholder=" " value="<?php if (isset($row3['Semester'])) {
+                                                                                                                                    echo $row3['Semester'];
                                                                                                                                 } ?>" required>
             </div>
-            <div class="form-group col-md-4">
-                <label for="Name">Name</label>
-                <input type="text" class="form-control form-control-sm" id="Name" name="Name" placeholder=" " value="<?php if (isset($row3['Name'])) {
-                                                                                                                            echo $row3['Name'];
-                                                                                                                        } ?>" required>
-            </div>
-            <div class="form-group col-md-4">
-                <label for="Program">Program</label>
-                <input type="text" class="form-control form-control-sm" id="Program" name="Program" placeholder=" " required value="BSc. (Engg.) in CSE">
-            </div>
+
             <div class="form-group col-md-4">
                 <label for="CourseCode">Course Code</label>
                 <input type="text" class="form-control form-control-sm" id="CourseCode" name="CourseCode" placeholder=" " required value="<?php if (isset($row3['CourseCode'])) {

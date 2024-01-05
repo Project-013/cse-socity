@@ -6,9 +6,9 @@
   <div class="table-responsive my-4 bg-light shadow p-3 rounded">
     <table class="table  border border-top-0 text-dark " style="font-size: 13px;">
       <div class="d-flex justify-content-between">
-        <h4 class="fw-normal heading_color">Results</h4>
+        <h4 class="fw-normal heading_color">Students</h4>
         <div>
-          <a class="btn btn-sm btn-outline-dark" href="index.php?page=result-action">Add new</a>
+          <a class="btn btn-sm btn-outline-dark" href="index.php?page=student-action">Add new</a>
         </div>
 
       </div>
@@ -18,13 +18,7 @@
           <th scope="col text-dark">Student ID</th>
           <th scope="col">Name</th>
           <th scope="col">Program</th>
-          <th scope="col">Semester</th>
-          <th scope="col">Course Code</th>
-          <th scope="col"> Course Title</th>
-          <th scope="col">Credit</th>
-          <th scope="col">Ecr</th>
-          <th scope="col">Letter Grade</th>
-          <th scope="col">Grade Point</th>
+          <th scope="col">session</th>
           <th scope="col">Action</th>
         </tr>
       </thead>
@@ -32,11 +26,11 @@
       <tbody class="text-secondary bg-light">
 
         <?php
-        $sql = "SELECT * FROM `results` ORDER BY  `ResultID` DESC";
+        $sql = "SELECT * FROM `student` ORDER BY  `StudentID` DESC";
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
-          $dlt_url = 'result/delete.php?ResultID='.$row['ResultID'];
-          $update_url = 'index.php?page=result-action&ResultID='.$row['ResultID'];
+          $dlt_url = 'student/delete.php?StudentID='.$row['StudentID'];
+          $update_url = 'index.php?page=student-action&StudentID='.$row['StudentID'];
 
         ?>
           <tr class=" text-dark">
@@ -44,34 +38,16 @@
               <?php echo $row['StudentID'] ?>
             </td>
             <td>
-              <?php echo "Name" ?>
+              <?php echo $row['Name'] ?>
             </td>
 
             <td>
-              <?php echo "Program" ?>
+              <?php echo $row['Program'] ?>
             </td>
             <td>
-              <?php echo $row['Semester'] ?>
-            </td>
-            <td>
-              <?php echo $row['CourseCode'] ?>
-            </td>
-            <td>
-              <?php echo $row['CourseTitle'] ?>
-            </td>
-            <td>
-              <?php echo $row['Credit'] ?>
+              <?php echo $row['session'] ?>
             </td>
 
-            <td>
-              <?php echo $row['Ecr'] ?>
-            </td>
-            <td>
-              <?php echo $row['LetterGrade'] ?>
-            </td>
-            <td>
-              <?php echo $row['GradePoint'] ?>
-            </td>
 
 
 
