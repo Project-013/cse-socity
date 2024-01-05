@@ -66,7 +66,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         ?>
                 <div class="row my-5">
                     <div class="col-md-9 mx-auto p-3">
-                        <div id="sectionToPrint">
+                        <div id="sectionToPrint" class="p-3">
                             <table class="table  border border-top-0 text-dark small">
                                 <div class="mb-3">
                                     <div class="row">
@@ -142,7 +142,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                         </div>
                     </div>
-                    <div><button class="btn btn-sm btn-dark mx-auto d-block" onclick="downloadPDF()">Download Result</button></div>
+                    <div class="d-flex justify-content-center">
+                        <button class="btn btn-sm btn-dark d-block me-2" onclick="downloadPDF()">Download </button>
+                        <button class="btn btn-sm btn-dark  d-block" onclick="printResult()">Print</button>
+
+                    </div>
 
                 </div>
 
@@ -197,6 +201,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // html2pdf().set(opt).from(element).save();
 
 
+        }
+
+        function printResult() {
+            // console.log("printPrescription called");
+            // print();
+            // Get HTML to print from element
+            const prtHtml = document.getElementById("sectionToPrint").innerHTML;
+
+            // Get all stylesheets HTML
+            let stylesHtml = "";
+            for (const node of [
+                    ...document.querySelectorAll('link[rel="stylesheet"], style'),
+                ]) {
+                stylesHtml += node.outerHTML;
+            }
+
+            // Open the print window
+            const WinPrint = window.open(
+                " ",
+                " ",
+                "left=0,top=0,width=800,height=900,toolbar=0,scrollbars=0,status=0"
+            );
+
+            WinPrint.document.write(`<!DOCTYPE html>
+<html>
+  <head>
+    ${stylesHtml}
+    <style>
+      ._edit_items{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    ${prtHtml}
+  </body>
+</html>`);
+
+            WinPrint.document.close();
+            WinPrint.focus();
+            WinPrint.print();
+            // WinPrint.close();
         }
     </script>
     <?php include 'footer.php'; ?>
