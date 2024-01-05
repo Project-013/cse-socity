@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 27, 2023 at 01:47 PM
+-- Generation Time: Jan 05, 2024 at 03:57 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -158,6 +158,30 @@ INSERT INTO `admins` (`id`, `role_id`, `avatar`, `name`, `email`, `password`, `s
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `blog`
+--
+
+CREATE TABLE `blog` (
+  `BlogID` int(11) NOT NULL,
+  `blog_title` varchar(255) DEFAULT NULL,
+  `blog_desc` text DEFAULT NULL,
+  `short_desc` text DEFAULT NULL,
+  `status` varchar(255) DEFAULT NULL,
+  `timestand` datetime DEFAULT current_timestamp(),
+  `UserID` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `blog`
+--
+
+INSERT INTO `blog` (`BlogID`, `blog_title`, `blog_desc`, `short_desc`, `status`, `timestand`, `UserID`) VALUES
+(1, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. \r\nIt has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. ', 'approved', NULL, 1),
+(2, 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. ', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. \r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. \r\n\r\nLorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. ', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry. ', NULL, '2023-07-24 10:32:29', 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `campaigns`
 --
 
@@ -199,7 +223,8 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`CommentID`, `UserID`, `ForumID`, `comment`, `timestand`) VALUES
 (6, 5, 16, 'wer', '2023-12-26 06:38:01'),
-(10, 1, 16, 'uu', '2023-12-26 07:17:42');
+(10, 1, 16, 'uu', '2023-12-26 07:17:42'),
+(11, 5, 18, 'se', '2024-01-05 08:30:37');
 
 -- --------------------------------------------------------
 
@@ -395,6 +420,30 @@ INSERT INTO `members` (`id`, `type`, `avatar`, `name`, `email`, `phone`, `design
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `msg_id` int(11) NOT NULL,
+  `incoming_msg_id` int(255) NOT NULL,
+  `outgoing_msg_id` int(255) NOT NULL,
+  `msg` varchar(1000) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`msg_id`, `incoming_msg_id`, `outgoing_msg_id`, `msg`) VALUES
+(16, 4, 5, 'hi'),
+(17, 1, 5, 'hi'),
+(18, 5, 1, 'hello'),
+(19, 1, 5, 'how are you'),
+(20, 5, 1, 'fine');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `newslatter`
 --
 
@@ -532,6 +581,30 @@ INSERT INTO `projects` (`ProjectID`, `title`, `description`, `author`, `status`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `react`
+--
+
+CREATE TABLE `react` (
+  `ReactID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `ForumID` int(11) DEFAULT NULL,
+  `CommentID` int(11) DEFAULT NULL,
+  `type` varchar(100) NOT NULL DEFAULT 'like'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `react`
+--
+
+INSERT INTO `react` (`ReactID`, `UserID`, `ForumID`, `CommentID`, `type`) VALUES
+(93, 5, 17, NULL, 'like'),
+(94, 5, NULL, 10, 'like'),
+(103, 5, 18, NULL, 'love'),
+(104, 5, NULL, 11, 'like');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `research`
 --
 
@@ -560,23 +633,109 @@ INSERT INTO `research` (`id`, `title`, `url`, `description`, `status`, `author`)
 CREATE TABLE `results` (
   `ResultID` int(11) NOT NULL,
   `StudentID` varchar(100) NOT NULL,
-  `Name` varchar(255) NOT NULL,
-  `Program` varchar(255) NOT NULL,
   `CourseCode` varchar(255) NOT NULL,
   `CourseTitle` varchar(255) NOT NULL,
   `Credit` varchar(10) NOT NULL,
   `Ecr` varchar(10) NOT NULL,
   `LetterGrade` varchar(10) NOT NULL,
-  `GradePoint` varchar(10) NOT NULL
+  `GradePoint` varchar(10) NOT NULL,
+  `Semester` varchar(255) DEFAULT 'N/A'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `results`
 --
 
-INSERT INTO `results` (`ResultID`, `StudentID`, `Name`, `Program`, `CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`) VALUES
-(7, '1901030200113', 'Sajib Sutradhar', 'BSc. (Engg.) in CSE', 'CSE-101', 'Computer', '3.00', '3.00', 'B+', '3.25'),
-(9, '1901030200113', 'Sajib Sutradhar', 'BSc. (Engg.) in CSE', 'CSE-101', 'Computer', '3.00', '3.00', 'A+', '4.00');
+INSERT INTO `results` (`ResultID`, `StudentID`, `CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`, `Semester`) VALUES
+(16, 'Student ID', 'Course Code', 'Course Title', 'Credit', 'Ecr', 'Letter Gra', 'Grade Poin', 'Spring 19'),
+(17, '1.50E+11', 'CSE-214', 'Electronic Devices and Circuits Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(18, '1.50E+11', 'CSE-313', 'Database System', '3', '0', 'F', '0', 'Spring 19'),
+(19, '1.50E+11', 'CSE-314', 'Database System Lab', '1.5', '1.5', 'D', '2', 'Spring 19'),
+(20, '1.50E+11', 'CSE-325', 'Computer Networking', '3', '0', 'F', '0', 'Spring 19'),
+(21, '1.50E+11', 'CSE-333', 'Software Engineering', '3', '0', 'F', '0', 'Spring 19'),
+(22, '1.50E+11', 'CSE-431', 'Digital Signal  Processing', '3', '0', 'F', '0', 'Spring 19'),
+(23, '1.50E+11', 'CSE-432', 'Digital Signal  Processing Lab', '1.5', '1.5', 'C', '2.25', 'Spring 19'),
+(24, '1.50E+11', 'CSE-455', 'Machine Learning', '3', '0', 'F', '0', 'Spring 19'),
+(25, '1.50E+11', 'CSE-456', 'Machine Learning Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(26, '1.50E+11', 'CSE-411', 'Artificial Intelligence', '3', '3', 'B', '3', 'Spring 19'),
+(27, '1.60E+11', 'CSE-411', 'Artificial Intelligence', '3', '3', 'B+', '3.25', 'Spring 19'),
+(28, '1.60E+11', 'CSE-212', 'Object Oriented Programming Language Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(29, '1.60E+11', 'CSE-456', 'Machine Learning Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(30, '1.60E+11', 'CSE-332', 'Operating System and System Programming', '1.5', '0', 'F', '0', 'Spring 19'),
+(31, '1.60E+11', 'CSE-335', 'Technical Writing And Presentation', '3', '0', 'F', '0', 'Spring 19'),
+(32, '1.60E+11', 'CSE-421', 'Compiler Construction', '3', '0', 'F', '0', 'Spring 19'),
+(33, '1.60E+11', 'CSE-422', 'Compiler Construction Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(34, '1.60E+11', 'CSE-431', 'Digital Signal  Processing', '3', '0', 'F', '0', 'Spring 19'),
+(35, '1.60E+11', 'CSE-432', 'Digital Signal  Processing Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(36, '1.60E+11', 'CSE-455', 'Machine Learning', '3', '0', 'F', '0', 'Spring 19'),
+(37, '1.70E+11', 'CSE-432', 'Digital Signal  Processing Lab', '1.5', '1.5', 'A+', '4', 'Spring 19'),
+(38, '1.70E+11', 'CSE-449', 'Bio-Informatics', '3', '3', 'B+', '3.25', 'Spring 19'),
+(39, '1.70E+11', 'CSE-450', 'Bio-Informatics Lab', '1.5', '1.5', 'A-', '3.5', 'Spring 19'),
+(40, '1.70E+11', 'MAT-103', 'Matrices, Vector Analysis and Geometry', '3', '3', 'B', '3', 'Spring 19'),
+(41, '1.70E+11', 'MAT-201', 'Numerical Methods', '3', '3', 'A-', '3.5', 'Spring 19'),
+(42, '1.70E+11', 'CSE-331', 'Operating System and System Programming', '3', '3', 'A', '3.75', 'Spring 19'),
+(43, '1.70E+11', 'CSE-402', 'Thesis/ Project II', '2', '2', 'A-', '3.5', 'Spring 19'),
+(44, '1.70E+11', 'CSE-404', 'Viva Voce', '1.5', '1.5', 'B+', '3.25', 'Spring 19'),
+(45, '1.70E+11', 'CSE-431', 'Digital Signal  Processing', '3', '3', 'A', '3.75', 'Spring 19'),
+(46, 'Student ID', 'Course Code', 'Course Title', 'Credit', 'Ecr', 'Letter Gra', 'Grade Poin', 'Spring 19'),
+(47, '1.50E+11', 'CSE-214', 'Electronic Devices and Circuits Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(48, '1.50E+11', 'CSE-313', 'Database System', '3', '0', 'F', '0', 'Spring 19'),
+(49, '1.50E+11', 'CSE-314', 'Database System Lab', '1.5', '1.5', 'D', '2', 'Spring 19'),
+(50, '1.50E+11', 'CSE-325', 'Computer Networking', '3', '0', 'F', '0', 'Spring 19'),
+(51, '1.50E+11', 'CSE-333', 'Software Engineering', '3', '0', 'F', '0', 'Spring 19'),
+(52, '1.50E+11', 'CSE-431', 'Digital Signal  Processing', '3', '0', 'F', '0', 'Spring 19'),
+(53, '1.50E+11', 'CSE-432', 'Digital Signal  Processing Lab', '1.5', '1.5', 'C', '2.25', 'Spring 19'),
+(54, '1.50E+11', 'CSE-455', 'Machine Learning', '3', '0', 'F', '0', 'Spring 19'),
+(55, '1.50E+11', 'CSE-456', 'Machine Learning Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(56, '1.50E+11', 'CSE-411', 'Artificial Intelligence', '3', '3', 'B', '3', 'Spring 19'),
+(57, '1.60E+11', 'CSE-411', 'Artificial Intelligence', '3', '3', 'B+', '3.25', 'Spring 19'),
+(58, '1.60E+11', 'CSE-212', 'Object Oriented Programming Language Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(59, '1.60E+11', 'CSE-456', 'Machine Learning Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(60, '1.60E+11', 'CSE-332', 'Operating System and System Programming', '1.5', '0', 'F', '0', 'Spring 19'),
+(61, '1.60E+11', 'CSE-335', 'Technical Writing And Presentation', '3', '0', 'F', '0', 'Spring 19'),
+(62, '1.60E+11', 'CSE-421', 'Compiler Construction', '3', '0', 'F', '0', 'Spring 19'),
+(63, '1.60E+11', 'CSE-422', 'Compiler Construction Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(64, '1.60E+11', 'CSE-431', 'Digital Signal  Processing', '3', '0', 'F', '0', 'Spring 19'),
+(65, '1.60E+11', 'CSE-432', 'Digital Signal  Processing Lab', '1.5', '0', 'F', '0', 'Spring 19'),
+(66, '1.60E+11', 'CSE-455', 'Machine Learning', '3', '0', 'F', '0', 'Spring 19'),
+(67, '1.70E+11', 'CSE-432', 'Digital Signal  Processing Lab', '1.5', '1.5', 'A+', '4', 'Spring 19'),
+(68, '1.70E+11', 'CSE-449', 'Bio-Informatics', '3', '3', 'B+', '3.25', 'Spring 19'),
+(69, '1.70E+11', 'CSE-450', 'Bio-Informatics Lab', '1.5', '1.5', 'A-', '3.5', 'Spring 19'),
+(70, '1.70E+11', 'MAT-103', 'Matrices, Vector Analysis and Geometry', '3', '3', 'B', '3', 'Spring 19'),
+(71, '1.70E+11', 'MAT-201', 'Numerical Methods', '3', '3', 'A-', '3.5', 'Spring 19'),
+(72, '1.70E+11', 'CSE-331', 'Operating System and System Programming', '3', '3', 'A', '3.75', 'Spring 19'),
+(73, '1.70E+11', 'CSE-402', 'Thesis/ Project II', '2', '2', 'A-', '3.5', 'Spring 19'),
+(74, '1.70E+11', 'CSE-404', 'Viva Voce', '1.5', '1.5', 'B+', '3.25', 'Spring 19'),
+(75, '1.70E+11', 'CSE-431', 'Digital Signal  Processing', '3', '3', 'A', '3.75', 'Spring 19'),
+(106, '150203020018', 'CSE-214', 'Electronic Devices and Circuits Lab', '1.5', '0', 'F', '0', '6'),
+(107, '150203020018', 'CSE-313', 'Database System', '3', '0', 'F', '0', '6'),
+(108, '150203020018', 'CSE-314', 'Database System Lab', '1.5', '1.5', 'D', '2', '6'),
+(109, '150203020018', 'CSE-325', 'Computer Networking', '3', '0', 'F', '0', '6'),
+(110, '150203020018', 'CSE-333', 'Software Engineering', '3', '0', 'F', '0', '6'),
+(111, '150203020018', 'CSE-431', 'Digital Signal  Processing', '3', '0', 'F', '0', '6'),
+(112, '150203020018', 'CSE-432', 'Digital Signal  Processing Lab', '1.5', '1.5', 'C', '2.25', '6'),
+(113, '150203020018', 'CSE-455', 'Machine Learning', '3', '0', 'F', '0', '6'),
+(114, '150203020018', 'CSE-456', 'Machine Learning Lab', '1.5', '0', 'F', '0', '6'),
+(115, '150203020018', 'CSE-411', 'Artificial Intelligence', '3', '3', 'B', '3', '6'),
+(116, '160103020079', 'CSE-411', 'Artificial Intelligence', '3', '3', 'B+', '3.25', '6'),
+(117, '160203020013', 'CSE-212', 'Object Oriented Programming Language Lab', '1.5', '0', 'F', '0', '6'),
+(118, '160203020013', 'CSE-456', 'Machine Learning Lab', '1.5', '0', 'F', '0', '6'),
+(119, '160203020013', 'CSE-332', 'Operating System and System Programming', '1.5', '0', 'F', '0', '6'),
+(120, '160203020013', 'CSE-335', 'Technical Writing And Presentation', '3', '0', 'F', '0', '6'),
+(121, '160203020013', 'CSE-421', 'Compiler Construction', '3', '0', 'F', '0', '6'),
+(122, '160203020013', 'CSE-422', 'Compiler Construction Lab', '1.5', '0', 'F', '0', '6'),
+(123, '160203020013', 'CSE-431', 'Digital Signal  Processing', '3', '0', 'F', '0', '6'),
+(124, '160203020013', 'CSE-432', 'Digital Signal  Processing Lab', '1.5', '0', 'F', '0', '6'),
+(125, '160203020013', 'CSE-455', 'Machine Learning', '3', '0', 'F', '0', '6'),
+(126, '170103020055', 'CSE-432', 'Digital Signal  Processing Lab', '1.5', '1.5', 'A+', '4', '6'),
+(127, '170103020055', 'CSE-449', 'Bio-Informatics', '3', '3', 'B+', '3.25', '6'),
+(128, '170103020055', 'CSE-450', 'Bio-Informatics Lab', '1.5', '1.5', 'A-', '3.5', '6'),
+(129, '170103020055', 'MAT-103', 'Matrices, Vector Analysis and Geometry', '3', '3', 'B', '3', '6'),
+(130, '170103020055', 'MAT-201', 'Numerical Methods', '3', '3', 'A-', '3.5', '6'),
+(131, '170103020055', 'CSE-331', 'Operating System and System Programming', '3', '3', 'A', '3.75', '6'),
+(132, '170103020055', 'CSE-402', 'Thesis/ Project II', '2', '2', 'A-', '3.5', '6'),
+(133, '170103020055', 'CSE-404', 'Viva Voce', '1.5', '1.5', 'B+', '3.25', '6'),
+(134, '170103020055', 'CSE-431', 'Digital Signal  Processing', '3', '3', 'A', '3.75', '6');
 
 -- --------------------------------------------------------
 
@@ -638,6 +797,30 @@ CREATE TABLE `shop_infos` (
 
 INSERT INTO `shop_infos` (`id`, `name`, `logo`, `short_details`, `email`, `phone`, `address`, `facebook_link`, `twitter_link`, `instagram_link`, `linkedin`, `currency`, `vat`, `social_media_type`, `social_media_link`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'CSE SOCITY', 'uploads/setting/Untitled design (2).png', 'nothing to say', 'admin@gmail.com', '01728522371', 'sylhet city', 'https://www.facebook.com/', 'https://twitter.com/', 'https://www.instagram.com/', 'https://www.linkedin.com/in/', NULL, NULL, NULL, NULL, '1', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student`
+--
+
+CREATE TABLE `student` (
+  `StudentID` varchar(100) NOT NULL,
+  `Name` varchar(255) NOT NULL,
+  `Program` varchar(255) NOT NULL,
+  `session` varchar(255) NOT NULL,
+  `Birthday` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `student`
+--
+
+INSERT INTO `student` (`StudentID`, `Name`, `Program`, `session`, `Birthday`) VALUES
+('150203020018', 'Abdullah Al Mamun', ' BSc. (Engg.) in CSE', 'Spring 17', '1997-01-01'),
+('160103020079', 'Md. Zahirul Islam', ' BSc. (Engg.) in CSE', 'Spring 17', '1999-01-05'),
+('160203020013', 'Mazid Mazidi', ' BSc. (Engg.) in CSE', 'Spring 17', '1998-01-02'),
+('170103020055', 'Mirza Israt Jahan Khadiza', ' BSc. (Engg.) in CSE', 'Spring 19', '1998-01-06');
 
 -- --------------------------------------------------------
 
@@ -704,17 +887,18 @@ CREATE TABLE `user` (
   `interests` text DEFAULT NULL,
   `skills` text DEFAULT NULL,
   `user_type` varchar(255) DEFAULT 'user',
-  `img` text DEFAULT NULL
+  `img` text DEFAULT NULL,
+  `active_status` varchar(255) DEFAULT 'offline'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`UserID`, `email`, `name`, `mobile`, `password`, `birthday`, `gender`, `last_blood_donate`, `blood_group`, `address`, `interests`, `skills`, `user_type`, `img`) VALUES
-(1, 'joy@gmail.com', 'Joy', '1235', '$2y$10$nWWoIatsr68cUN8Zj3jw0uaZTd6LGYuKm8aOuQComdvMfazbOZLLq', '2023-09-21', 'Male', '2023-09-20', 'B+', 'dsgdfg', 'ML, DL, DS, CP', 'C, Java', 'user', NULL),
-(4, 'talha@gmail.com', 'Talha Ahmed', '13213214', '$2y$10$ElOVhJ3hnx5Zu7k3QwE6HumQqWzOS4owpIhIEFd9BpiHB/9D27BcC', '2023-09-13', 'Male', '2023-09-27', 'A+', 'Taltola, Sylhet', 'Web Dev', 'React, Django', 'user', NULL),
-(5, 'mitu@gmail.com', 'Mitu Paul', '123456789', '$2y$10$cmilmARfZiYagya3ITeyV.4U.jcMhjQDCS9qrC/8RsizfNVClU9RO', '1998-12-28', 'Male', '2023-10-02', 'A+', 'Sylhet, Os\r\nSylhet', 'ML, Coding, DL', 'HTML, CSS, PHP, JS', 'user', '396512382_1708945682933324_3365298834682639331_n.jpg');
+INSERT INTO `user` (`UserID`, `email`, `name`, `mobile`, `password`, `birthday`, `gender`, `last_blood_donate`, `blood_group`, `address`, `interests`, `skills`, `user_type`, `img`, `active_status`) VALUES
+(1, 'joy@gmail.com', 'Joy', '1235', '$2y$10$nWWoIatsr68cUN8Zj3jw0uaZTd6LGYuKm8aOuQComdvMfazbOZLLq', '2023-09-21', 'Male', '2023-09-20', 'B+', 'dsgdfg', 'ML, DL, DS, CP', 'C, Java', 'user', NULL, 'offline'),
+(4, 'talha@gmail.com', 'Talha Ahmed', '13213214', '$2y$10$ElOVhJ3hnx5Zu7k3QwE6HumQqWzOS4owpIhIEFd9BpiHB/9D27BcC', '2023-09-13', 'Male', '2023-09-27', 'A+', 'Taltola, Sylhet', 'Web Dev', 'React, Django', 'user', NULL, 'offline'),
+(5, 'mitu@gmail.com', 'Mitu Paul', '123456789', '$2y$10$cmilmARfZiYagya3ITeyV.4U.jcMhjQDCS9qrC/8RsizfNVClU9RO', '1998-12-28', 'Male', '2023-10-02', 'A+', 'Sylhet, Os\r\nSylhet', 'ML, Coding, DL', 'HTML, CSS, PHP, JS', 'user', '396512382_1708945682933324_3365298834682639331_n.jpg', 'offline');
 
 -- --------------------------------------------------------
 
@@ -828,6 +1012,12 @@ ALTER TABLE `members`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`msg_id`);
+
+--
 -- Indexes for table `newslatter`
 --
 ALTER TABLE `newslatter`
@@ -858,6 +1048,12 @@ ALTER TABLE `projects`
   ADD PRIMARY KEY (`ProjectID`);
 
 --
+-- Indexes for table `react`
+--
+ALTER TABLE `react`
+  ADD PRIMARY KEY (`ReactID`);
+
+--
 -- Indexes for table `research`
 --
 ALTER TABLE `research`
@@ -880,6 +1076,12 @@ ALTER TABLE `service`
 --
 ALTER TABLE `shop_infos`
   ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `student`
+--
+ALTER TABLE `student`
+  ADD PRIMARY KEY (`StudentID`);
 
 --
 -- Indexes for table `summeries`
@@ -938,7 +1140,7 @@ ALTER TABLE `campaigns`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `contact_us`
@@ -983,6 +1185,12 @@ ALTER TABLE `members`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+--
 -- AUTO_INCREMENT for table `newslatter`
 --
 ALTER TABLE `newslatter`
@@ -1013,6 +1221,12 @@ ALTER TABLE `projects`
   MODIFY `ProjectID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `react`
+--
+ALTER TABLE `react`
+  MODIFY `ReactID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+
+--
 -- AUTO_INCREMENT for table `research`
 --
 ALTER TABLE `research`
@@ -1022,7 +1236,7 @@ ALTER TABLE `research`
 -- AUTO_INCREMENT for table `results`
 --
 ALTER TABLE `results`
-  MODIFY `ResultID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `ResultID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=135;
 
 --
 -- AUTO_INCREMENT for table `service`

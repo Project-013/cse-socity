@@ -35,8 +35,8 @@
         $sql = "SELECT * FROM `results` NATURAL JOIN `student` ORDER BY  `ResultID` DESC";
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
-          $dlt_url = 'result/delete.php?ResultID='.$row['ResultID'];
-          $update_url = 'index.php?page=result-action&ResultID='.$row['ResultID'];
+          $dlt_url = 'result/delete.php?ResultID=' . $row['ResultID'];
+          $update_url = 'index.php?page=result-action&ResultID=' . $row['ResultID'];
 
         ?>
           <tr class=" text-dark">

@@ -40,39 +40,38 @@ if (isset($_POST['StudentID'])) {
     $result = mysqli_query($conn, $sql);
 }
 
-// if (isset($_FILES['csv'])) {
-//     if ($_FILES["csv"]["error"] > 0) {
-//         echo "Error: " . $_FILES["csv"]["error"];
-//     } else {
-//         // Read CSV file
-//         $file = $_FILES["csv"]["tmp_name"];
-//         $handle = fopen($file, "r");
 
-//         // Process CSV data
-//         while (($data = fgetcsv($handle)) !== false) {
-//             $StudentID =  $data[0];
-//             $Name = $data[1];
-//             $Program =  $data[2];
-//             $CourseCode = $data[3];
-//             $CourseTitle =  $data[4];
-//             $Credit = $data[5];
-//             $Ecr = $data[6];
-//             // $GradePoint =  $_POST['GradePoint'];
-//             $LetterGrade = $data[7];
-//             $GradePoint = $data[8];
-//             // Add more columns as needed
-//             $sql = "INSERT INTO `results`(`StudentID`, `Name`, `Program`, `CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`) VALUES ('$StudentID','$Name',' $Program','$CourseCode','$CourseTitle','$Credit','$Ecr','$LetterGrade','$GradePoint')";
+if (isset($_FILES['csv'])) {
+    if ($_FILES["csv"]["error"] > 0) {
+        echo "Error: " . $_FILES["csv"]["error"];
+    } else {
+        // Read CSV file
+        $file = $_FILES["csv"]["name"];
+        $handle = fopen($file, "r");
 
-//             $result = mysqli_query($conn, $sql);
+        // Open the CSV file for reading
 
-//         }
+        // Check if the file was opened successfully
+        if ($handle !== false) {
+            // Read each row from the CSV file
+            while (($row = fgetcsv($handle)) !== false) {
+                // $row is an array containing the fields in the current row
+                // Process the data as needed
+                if ($row[0] != 'Student ID') {
+                    $sql = "INSERT INTO `results`(`StudentID`, `Semester`,  `CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`) VALUES ('$row[0]','$row[7]','$row[1]','$row[6]','$row[2]','$row[3]','$row[4]','$row[5]')";
+                    $result = mysqli_query($conn, $sql);
+                    echo $sql;
+                }
+            }
 
-//         // Close file handle
-//         fclose($handle);
-//     }
-
-// }
-
+            // Close the file when done
+            fclose($handle);
+        } else {
+            // Handle the case when the file cannot be opened
+            echo "Error: Unable to open the CSV file.";
+        }
+    }
+}
 
 
 
@@ -215,16 +214,17 @@ if (isset($_GET['ResultID'])) {
                 } else echo "Add" ?>
             </button>
         </form>
-        <!-- 
+
         <h6>or</h6>
 
-        <form action="" method="post" class="my-5">
+        <form action="" method="post" class="my-5" id="csvForm" enctype="multipart/form-data">
             <div class="mb-3">
                 <h4 class="mb-3">Upload CSV</h4>
                 <input type="file" name="csv" id="csv" accept=".csv">
             </div>
             <button class="btn btn-primary">Submit</button>
-        </form> -->
+        </form>
     </div>
 
 </div>
+
