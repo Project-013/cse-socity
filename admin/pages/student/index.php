@@ -17,6 +17,7 @@
         <tr>
           <th scope="col text-dark">Student ID</th>
           <th scope="col">Name</th>
+          <th scope="col">Birthday</th>
           <th scope="col">Program</th>
           <th scope="col">session</th>
           <th scope="col">Action</th>
@@ -39,6 +40,9 @@
             </td>
             <td>
               <?php echo $row['Name'] ?>
+            </td>
+            <td>
+              <?php echo $row['Birthday'] ?>
             </td>
 
             <td>

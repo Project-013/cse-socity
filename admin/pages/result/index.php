@@ -32,7 +32,7 @@
       <tbody class="text-secondary bg-light">
 
         <?php
-        $sql = "SELECT * FROM `results` ORDER BY  `ResultID` DESC";
+        $sql = "SELECT * FROM `results` NATURAL JOIN `student` ORDER BY  `ResultID` DESC";
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
           $dlt_url = 'result/delete.php?ResultID='.$row['ResultID'];
@@ -44,11 +44,11 @@
               <?php echo $row['StudentID'] ?>
             </td>
             <td>
-              <?php echo "Name" ?>
+              <?php echo $row['Name'] ?>
             </td>
 
             <td>
-              <?php echo "Program" ?>
+              <?php echo $row['Program'] ?>
             </td>
             <td>
               <?php echo $row['Semester'] ?>

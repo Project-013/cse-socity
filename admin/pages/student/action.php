@@ -7,15 +7,16 @@ if (isset($_POST['StudentID'])) {
     $Name =  $_POST['Name'];
     $Program =  $_POST['Program'];
     $session =  $_POST['session'];
+    $Birthday =  $_POST['Birthday'];
 
 
 
-    $sql = "INSERT INTO `student`(`StudentID`, `Name`, `Program`, `session`) VALUES ('$StudentID','$Name',' $Program','$session')";
+    $sql = "INSERT INTO `student`(`StudentID`, `Name`, `Program`, `session`,`Birthday`) VALUES ('$StudentID','$Name',' $Program','$session','$Birthday')";
 
     if (isset($_GET['StudentID'])) {
         $UpdateStudentID = $_GET['StudentID'];
 
-        $sql = "UPDATE `student` SET `StudentID`='$StudentID',`Name`='$Name',`Program`='$Program',`session`='$session' WHERE `StudentID`=$UpdateStudentID";
+        $sql = "UPDATE `student` SET `StudentID`='$StudentID',`Name`='$Name',`Program`='$Program',`session`='$session',`Birthday`='$Birthday' WHERE `StudentID`=$UpdateStudentID";
     }
 
 
@@ -57,9 +58,7 @@ if (isset($_GET['StudentID'])) {
         <form action="" method="post" class="row">
             <div class="form-group col-md-6">
                 <label for="StudentID">Student ID</label>
-                <input type="text" class="form-control form-control-sm" id="StudentID" name="StudentID" placeholder=" " 
-                
-                value="<?php if (isset($row3['StudentID'])) {
+                <input type="text" class="form-control form-control-sm" id="StudentID" name="StudentID" placeholder=" " value="<?php if (isset($row3['StudentID'])) {
                                                                                                                                     echo $row3['StudentID'];
                                                                                                                                 } ?>" required>
             </div>
@@ -76,10 +75,17 @@ if (isset($_GET['StudentID'])) {
             <div class="form-group col-md-6">
                 <label for="session">Session</label>
                 <input type="text" class="form-control form-control-sm" id="session" name="session" placeholder=" " required value="<?php if (isset($row3['session'])) {
-                                                                                                                                                echo $row3['session'];
-                                                                                                                                            } ?>">
+                                                                                                                                        echo $row3['session'];
+                                                                                                                                    } ?>">
             </div>
-           
+
+            <div class="form-group col-md-6">
+                <label for="Birthday">Birthday</label>
+                <input type="date" class="form-control form-control-sm" id="Birthday" name="Birthday" placeholder=" " required value="<?php if (isset($row3['Birthday'])) {
+                                                                                                                                            echo $row3['Birthday'];
+                                                                                                                                        } ?>">
+            </div>
+
 
 
 
