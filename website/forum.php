@@ -13,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $UpdateForumID = $_GET['ForumID'];
 
         $sql = "UPDATE `forum` SET `title` = '$title', `description` = '$description', `short_description` = '$short_description' WHERE `forum`.`ForumID` =  $UpdateForumID;";
-
     }
     $result = mysqli_query($conn, $sql);
     $redirect_url = "/cse-socity/website/forum.php";
@@ -51,16 +50,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $Forum_UserID    = $row['UserID'];
                     $start = new DateTime();
                     $end = new DateTime($timestand, timezone_open('asia/dhaka'));
-            
+
                     $interval = $start->diff($end);
-            
+
                     $year = $interval->format('%y');
                     $months = $interval->format('%m');
                     $days = $interval->format('%a');
                     $hours = $interval->format('%h');
                     $min = $interval->format('%i');
                     $post_time = "Just now";
-            
+
                     if ($year > 0) {
                         $post_time = $year . ' yers ago';
                     } else if ($months > 0) {
@@ -76,10 +75,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                     if ($status == "approved") {
 
+                        $sql_react = "SELECT * FROM `react`  WHERE `ForumID`='$ForumID'";
+                        $result_react = mysqli_query($conn, $sql_react);
+                        $total_react = mysqli_num_rows($result_react);
+
+                        $sql_like = "SELECT * FROM `react`  WHERE `ForumID`='$ForumID' AND `type`='like'";
+                        $result_like = mysqli_query($conn, $sql_like);
+                        $total_like = mysqli_num_rows($result_like);
+
+                        $sql_dislike = "SELECT * FROM `react`  WHERE `ForumID`='$ForumID' AND `type`='dislike'";
+                        $result_dislike = mysqli_query($conn, $sql_dislike);
+                        $total_dislike = mysqli_num_rows($result_dislike);
+
+                        $sql_love = "SELECT * FROM `react`  WHERE `ForumID`='$ForumID' AND `type`='love'";
+                        $result_love = mysqli_query($conn, $sql_love);
+                        $total_love = mysqli_num_rows($result_love);
+
+                        $isLiked="";
+                        $react_url = "";
+                        if (isset($_SESSION["UserID"])) {
+                            $UserID = $_SESSION["UserID"];
+                            $like_url = "/cse-socity/website/partials/_action.php?type=like&ForumID=" . $ForumID;
+                            $dislike_url = "/cse-socity/website/partials/_action.php?type=dislike&ForumID=" . $ForumID;
+                            $love_url = "/cse-socity/website/partials/_action.php?type=love&ForumID=" . $ForumID;
+                            $sql_isLiked = "SELECT * FROM `react` WHERE `ForumID`='$ForumID' AND `UserID`= '$UserID'";
+                            $r1 = mysqli_query($conn, $sql_isLiked);
+                            $isLiked = mysqli_num_rows($r1);
+                            if ($isLiked) {
+                                $row_react = mysqli_fetch_assoc($r1);
+                                $react_type = $row_react['type'];
+                            }
+                        }
+ 
+
 
 
                 ?>
-                        <div class="col-md-10 my-3">
+                        <div class="col-md-10 my-3" id="<?php echo 'forum' . $ForumID ?>">
                             <div class="card">
 
                                 <div class="card-body">
@@ -92,7 +124,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     ?>
                                         <span class="d-flex justify-content-end">
                                             <a href="<?php echo $update_url ?>" class="btn btn-sm btn-primary me-1"> <i class="fa fa-edit " aria-hidden="true"></i></a>
-                                            <a href="<?php echo $dlt_url ?>" class="btn btn-sm btn-danger ">  <i class="fa fa-trash " aria-hidden="true"></i></a>
+                                            <a href="<?php echo $dlt_url ?>" class="btn btn-sm btn-danger "> <i class="fa fa-trash " aria-hidden="true"></i></a>
 
                                         </span>
 
@@ -103,8 +135,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     ?>
                                     <h4 class="card-title text-success"><?php echo $title ?></h4>
                                     <h6 class=" text-muted">
-                                    <?php 
-                                    if ($row['img']) {
+                                        <?php
+                                        if ($row['img']) {
                                         ?>
                                             <img src="/cse-socity/website/img/<?php echo $row['img']  ?>" alt="nothing found" width="20" height="20" class="d- mx-auto rounded-circle">
                                         <?php
@@ -114,13 +146,55 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                         <?php
                                         }
-                                        ?>     
-                                    <?php echo $row['name'] ?></h6>
+                                        ?>
+                                        <?php echo $row['name'] ?>
+                                    </h6>
                                     <hr>
                                     <p class="card-text"></b><?php echo $short_description ?>...<a class="" href="forum-post.php?id=<?php echo $ForumID ?>">See more</a></p>
                                 </div>
-                                <div class="card-footer bg-white">
-                                <?php echo $post_time ?>
+                                <div class="card-footer bg-white d-flex justify-content-between">
+                                    <div>
+                                        <div>
+                                            <div>
+                                                <div class="d-flex">
+
+                                                    <a class="me-2 position-relative" href="<?php echo $like_url ?>">
+                                                        <i class="fa fa-thumbs-up   fa-2x text-<?php if ($isLiked && $react_type == 'like') echo "primary";
+                                                                                                else echo "dark" ?> d-block" aria-hidden="true"></i>
+                                                        <?php if ($total_like) { ?>
+                                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                                <?php echo $total_like ?>
+                                                                <span class="visually-hidden">unread messages</span>
+                                                            </span>
+                                                        <?php } ?>
+                                                    </a>
+                                                    <a class="me-2 position-relative" href="<?php echo $dislike_url ?>">
+                                                        <i class="fa fa-thumbs-down   fa-2x text-<?php if ($isLiked && $react_type == 'dislike') echo "primary";
+                                                                                                else echo "dark" ?> d-block" aria-hidden="true"></i>
+                                                        <?php if ($total_dislike) { ?>
+                                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                                <?php echo $total_dislike ?>
+                                                                <span class="visually-hidden">unread messages</span>
+                                                            </span>
+                                                        <?php } ?>
+                                                    </a>
+                                                    <a class="me-2 position-relative" href="<?php echo $love_url ?>">
+                                                        <i class="fa fa-heart   fa-2x text-<?php if ($isLiked && $react_type == 'love') echo "danger";
+                                                                                                else echo "dark" ?> d-block" aria-hidden="true"></i>
+                                                        <?php if ($total_love) { ?>
+                                                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                                <?php echo $total_love ?>
+                                                                <span class="visually-hidden">unread messages</span>
+                                                            </span>
+                                                        <?php } ?>
+                                                    </a>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div><?php echo $post_time ?></div>
                                 </div>
                             </div>
                         </div>
@@ -175,13 +249,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                             ?>
 
-                            <h4 class=" mb-3 fw-semibold"><?php if (isset($UpdateForumID)) {echo "Updete";}else echo "Create" ?> post</h4>
+                            <h4 class=" mb-3 fw-semibold"><?php if (isset($UpdateForumID)) {
+                                                                echo "Updete";
+                                                            } else echo "Create" ?> post</h4>
 
                             <form class="text-muted" action="" method="post">
                                 <div class="row g-2 justify-content-center">
                                     <div class="form-floating  col-md-12">
-                                        <input type="text" class="form-control _form_data" id="title" name="title" placeholder=" " required 
-                                        value="<?php if (isset($Updatetitle)) {echo $Updatetitle;} ?>">
+                                        <input type="text" class="form-control _form_data" id="title" name="title" placeholder=" " required value="<?php if (isset($Updatetitle)) {
+                                                                                                                                                        echo $Updatetitle;
+                                                                                                                                                    } ?>">
                                         <label for="title">Title* </label>
                                     </div>
                                     <div class="form-floating  col-md-12 d-none">
@@ -191,13 +268,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                     <div class="col-12">
                                         <label for="description">Short Description*</label>
-                                        <textarea class="form-control _form_data" id="short_description" name="short_description" placeholder=" " rows="2"><?php if (isset($Updateshort_description)) {echo $Updateshort_description;} ?></textarea>
+                                        <textarea class="form-control _form_data" id="short_description" name="short_description" placeholder=" " rows="2"><?php if (isset($Updateshort_description)) {
+                                                                                                                                                                echo $Updateshort_description;
+                                                                                                                                                            } ?></textarea>
                                     </div>
                                     <div class="col-12">
                                         <label for="description">Description*</label>
-                                        <textarea class="form-control _form_data" id="description" name="description" placeholder=" " rows="6"><?php if (isset($Updatedescription)) {echo $Updatedescription;} ?></textarea>
+                                        <textarea class="form-control _form_data" id="description" name="description" placeholder=" " rows="6"><?php if (isset($Updatedescription)) {
+                                                                                                                                                    echo $Updatedescription;
+                                                                                                                                                } ?></textarea>
                                     </div>
-                                    <button id="submit" type="submit" class="btn btn-primary px-6 my-3"><?php if (isset($UpdateForumID)) {echo "Updete";}else echo "Create" ?> </button>
+                                    <button id="submit" type="submit" class="btn btn-primary px-6 my-3"><?php if (isset($UpdateForumID)) {
+                                                                                                            echo "Updete";
+                                                                                                        } else echo "Create" ?> </button>
 
                                 </div>
                             </form>

@@ -11,10 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sql = "INSERT INTO `comments`(`comment`, `UserID`, `ForumID`) VALUES ('$comment','$UserID','$ForumID')";
 
     if (isset($_GET['CommentID'])) {
-        $UpdateCommentID= $_GET['CommentID'];
+        $UpdateCommentID = $_GET['CommentID'];
 
         $sql = "UPDATE `comments` SET `comment` = '$comment' WHERE `CommentID` =  $UpdateCommentID;";
-
     }
     $result = mysqli_query($conn, $sql);
     $redirect_url = "/cse-socity/website/forum-post.php?id=" . $ForumID;
@@ -74,6 +73,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 if ($ForumID) {
 
+                    $sql_react = "SELECT * FROM `react`  WHERE `ForumID`='$ForumID'";
+                    $result_react = mysqli_query($conn, $sql_react);
+                    $total_react = mysqli_num_rows($result_react);
+
+                    
+                    $sql_like = "SELECT * FROM `react`  WHERE `ForumID`='$ForumID' AND `type`='like'";
+                    $result_like = mysqli_query($conn, $sql_like);
+                    $total_like = mysqli_num_rows($result_like);
+
+                    $sql_dislike = "SELECT * FROM `react`  WHERE `ForumID`='$ForumID' AND `type`='dislike'";
+                    $result_dislike = mysqli_query($conn, $sql_dislike);
+                    $total_dislike = mysqli_num_rows($result_dislike);
+
+                    $sql_love = "SELECT * FROM `react`  WHERE `ForumID`='$ForumID' AND `type`='love'";
+                    $result_love = mysqli_query($conn, $sql_love);
+                    $total_love = mysqli_num_rows($result_love);
+                    $react_url = "";
+                    $isLiked = "";
+                    if (isset($_SESSION["UserID"])) {
+                        $UserID = $_SESSION["UserID"];
+                        $like_url = "/cse-socity/website/partials/_action.php?redirect=post&type=like&ForumID=" . $ForumID;
+                        $dislike_url = "/cse-socity/website/partials/_action.php?redirect=post&type=dislike&ForumID=" . $ForumID;
+                        $love_url = "/cse-socity/website/partials/_action.php?redirect=post&type=love&ForumID=" . $ForumID;
+                        $sql_isLiked = "SELECT * FROM `react` WHERE `ForumID`='$ForumID' AND `UserID`= '$UserID'";
+                        $r1 = mysqli_query($conn, $sql_isLiked);
+                        $isLiked = mysqli_num_rows($r1);
+                        if ($isLiked) {
+                            $row_react = mysqli_fetch_assoc($r1);
+                            $react_type = $row_react['type'];
+                        }
+                    }
+
 
 
             ?>
@@ -82,16 +113,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <div class="card-body">
                                 <?php
                                 if (isset($_SESSION["UserID"]) && $Forum_UserID == $_SESSION["UserID"]) {
-                                    $UserID = $_SESSION["UserID"];
+
                                     $update_url = "/cse-socity/website/forum.php?id=" . $ForumID;
                                     $dlt_url = "/cse-socity/website/partials/_delete.php?ForumID=" . $ForumID;
 
                                 ?>
-                                         <span class="d-flex justify-content-end">
-                                            <a href="<?php echo $update_url ?>" class="btn btn-sm btn-primary me-1"> <i class="fa fa-edit " aria-hidden="true"></i></a>
-                                            <a href="<?php echo $dlt_url ?>" class="btn btn-sm btn-danger ">  <i class="fa fa-trash " aria-hidden="true"></i></a>
+                                    <span class="d-flex justify-content-end">
+                                        <a href="<?php echo $update_url ?>" class="btn btn-sm btn-primary me-1"> <i class="fa fa-edit " aria-hidden="true"></i></a>
+                                        <a href="<?php echo $dlt_url ?>" class="btn btn-sm btn-danger "> <i class="fa fa-trash " aria-hidden="true"></i></a>
 
-                                        </span>
+                                    </span>
 
                                 <?php
                                 }
@@ -99,121 +130,162 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 ?>
                                 <h4 class="card-title text-success"><?php echo $title ?></h4>
                                 <h6 class=" text-muted">
-                                <?php 
+                                    <?php
                                     if ($row['img']) {
-                                        ?>
-                                            <img src="/cse-socity/website/img/<?php echo $row['img']  ?>" alt="nothing found" width="20" height="20" class="d- mx-auto rounded-circle">
-                                        <?php
-                                        } else {
-                                        ?>
-                                            <i class="fa fa-user-circle  text-primary " aria-hidden="true"></i>
+                                    ?>
+                                        <img src="/cse-socity/website/img/<?php echo $row['img']  ?>" alt="nothing found" width="20" height="20" class="d- mx-auto rounded-circle">
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <i class="fa fa-user-circle  text-primary " aria-hidden="true"></i>
 
-                                        <?php
-                                        }
-                                        ?>  
-                                
-                                <?php echo $row['name'] ?></h6>
+                                    <?php
+                                    }
+                                    ?>
+
+                                    <?php echo $row['name'] ?>
+                                </h6>
                                 <hr>
 
                                 <p class="card-text"></b><?php echo $description ?></p>
                             </div>
-                            <div class="card-footer bg-white">
-                                <?php echo $post_time ?>
+                            <div class="card-footer bg-white d-flex justify-content-between">
+                                <div>
+                                    <div>
+                                        <div class="d-flex">
+
+                                            <a class="me-2 position-relative" href="<?php echo $like_url ?>">
+                                                <i class="fa fa-thumbs-up   fa-2x text-<?php if ($isLiked && $react_type == 'like') echo "primary";
+                                                                                        else echo "dark" ?> d-block" aria-hidden="true"></i>
+                                                <?php if ($total_like) { ?>
+                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                        <?php echo $total_like ?>
+                                                        <span class="visually-hidden">unread messages</span>
+                                                    </span>
+                                                <?php } ?>
+                                            </a>
+                                            <a class="me-2 position-relative" href="<?php echo $dislike_url ?>">
+                                                <i class="fa fa-thumbs-down   fa-2x text-<?php if ($isLiked && $react_type == 'dislike') echo "primary";
+                                                                                            else echo "dark" ?> d-block" aria-hidden="true"></i>
+                                                <?php if ($total_dislike) { ?>
+                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                        <?php echo $total_dislike ?>
+                                                        <span class="visually-hidden">unread messages</span>
+                                                    </span>
+                                                <?php } ?>
+                                            </a>
+                                            <a class="me-2 position-relative" href="<?php echo $love_url ?>">
+                                                <i class="fa fa-heart   fa-2x text-<?php if ($isLiked && $react_type == 'love') echo "danger";
+                                                                                    else echo "dark" ?> d-block" aria-hidden="true"></i>
+                                                <?php if ($total_love) { ?>
+                                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                                        <?php echo $total_love ?>
+                                                        <span class="visually-hidden">unread messages</span>
+                                                    </span>
+                                                <?php } ?>
+                                            </a>
+
+                                        </div>
+                              
+                                    </div>
+
+                                </div>
+                                <div><?php echo $post_time ?></div>
                             </div>
 
                         </div>
                     </div>
 
                     <div class="col-md-5">
-                    <?php
-                    if (isset($_SESSION["UserID"])) {
-                        $UserID = $_SESSION["UserID"];
+                        <?php
+                        if (isset($_SESSION["UserID"])) {
+                            $UserID = $_SESSION["UserID"];
 
 
-          
 
-                        if (isset($_GET['CommentID'])) {
-                            $UpdateCommentID = $_GET['CommentID'];
 
-                            $sql3 = "SELECT * FROM `comments` WHERE `CommentID`=$UpdateCommentID";
-                            $result3 = mysqli_query($conn, $sql3);
+                            if (isset($_GET['CommentID'])) {
+                                $UpdateCommentID = $_GET['CommentID'];
 
-                            while ($row3 = mysqli_fetch_assoc($result3)) {
-                                $Update_comment   = $row3['comment'];
+                                $sql3 = "SELECT * FROM `comments` WHERE `CommentID`=$UpdateCommentID";
+                                $result3 = mysqli_query($conn, $sql3);
+
+                                while ($row3 = mysqli_fetch_assoc($result3)) {
+                                    $Update_comment   = $row3['comment'];
+                                }
                             }
+
+
+                        ?>
+
+
+                            <div class="">
+                                <div class="row justify-content-center g-3 my-2">
+                                    <div class="col-lg-12 bg-white shadow-lg rounded p-4">
+
+                                        <h4 class=" mb-3 fw-semibold"><?php if (isset($UpdateCommentID)) {
+                                                                            echo "Updete";
+                                                                        } else echo "Create" ?> comment</h4>
+
+                                        <form class="text-muted" action="" method="post">
+                                            <div class="row g-2 justify-content-center">
+                                                <div class="form-floating  col-md-12 d-none ">
+                                                    <input type="text" class="form-control" id="UserID" name="UserID" placeholder=" " value="<?php echo $UserID ?>" required>
+                                                    <label for="author">Author* </label>
+                                                </div>
+                                                <div class="form-floating  col-md-12 d-none ">
+                                                    <input type="text" class="form-control" id="ForumID" name="ForumID" placeholder=" " value="<?php echo $ForumID ?>" required>
+                                                    <label for="author">ForumID* </label>
+                                                </div>
+
+                                                <div class="col-12">
+                                                    <textarea class="form-control _form_data" id="comment" name="comment" placeholder=" " rows="2"><?php if (isset($Update_comment)) {
+                                                                                                                                                        echo $Update_comment;
+                                                                                                                                                    } ?></textarea>
+                                                </div>
+
+                                                <button id="submit" type="submit" class="btn btn-primary px-6 my-3"><?php if (isset($UpdateCommentID)) {
+                                                                                                                        echo "Updete";
+                                                                                                                    } else echo "Create" ?> </button>
+
+                                            </div>
+                                        </form>
+
+
+                                    </div>
+
+
+                                </div>
+
+
+
+                            <?php
+                        } else {
+                            ?>
+                                <div class=" ">
+                                    <div class="alert alert-info " role="alert">
+                                        Please <a href="login.php">login</a> to comment!
+                                    </div>
+                                </div>
+                            <?php
+
+
                         }
 
+                            ?>
+                            <?php include('partials/_comment.php') ?>
+                            </div>
+
+
+                    <?php
+                }
+            }
 
                     ?>
 
 
-                        <div class="">
-                            <div class="row justify-content-center g-3 my-2">
-                                <div class="col-lg-12 bg-white shadow-lg rounded p-4">
 
-                                    <h4 class=" mb-3 fw-semibold"><?php if (isset($UpdateCommentID)) {
-                                                                        echo "Updete";
-                                                                    } else echo "Create" ?> comment</h4>
-
-                                    <form class="text-muted" action="" method="post">
-                                        <div class="row g-2 justify-content-center">
-                                            <div class="form-floating  col-md-12 d-none ">
-                                                <input type="text" class="form-control" id="UserID" name="UserID" placeholder=" " value="<?php echo $UserID ?>" required>
-                                                <label for="author">Author* </label>
-                                            </div>
-                                            <div class="form-floating  col-md-12 d-none ">
-                                                <input type="text" class="form-control" id="ForumID" name="ForumID" placeholder=" " value="<?php echo $ForumID ?>" required>
-                                                <label for="author">ForumID* </label>
-                                            </div>
-
-                                            <div class="col-12">
-                                                <textarea class="form-control _form_data" id="comment" name="comment" placeholder=" " rows="2"><?php if (isset($Update_comment)) {
-                                                                                                                                                    echo $Update_comment;
-                                                                                                                                                } ?></textarea>
-                                            </div>
-
-                                            <button id="submit" type="submit" class="btn btn-primary px-6 my-3"><?php if (isset($UpdateCommentID)) {
-                                                                                                                    echo "Updete";
-                                                                                                                } else echo "Create" ?> </button>
-
-                                        </div>
-                                    </form>
-
-
-                                </div>
-
-
-                            </div>
-
-
-
-                        <?php
-                    } else {
-                        ?>
-                            <div class=" ">
-                                <div class="alert alert-info " role="alert">
-                                    Please <a href="login.php">login</a> to comment!
-                                </div>
-                            </div>
-                        <?php
-
-
-                    }
-
-                        ?>
-                        <?php include('partials/_comment.php') ?>
                     </div>
-                   
-
-                <?php
-                }
-            }
-
-                ?>
-
-
-
-                        </div>
 
     </section>
 
