@@ -113,6 +113,8 @@ $row = mysqli_fetch_assoc($q)
                             $UserID = $_SESSION["UserID"];
 
                         ?>
+                            <a href="chat" class="btn btn-outline-dark"><i class="fa fa-comment fa-2x " aria-hidden="true"></i></a>
+
 
                             <span class="dropdown text-light">
                                 <button class="dropdown-toggle btn btn-muted" type="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -145,6 +147,7 @@ $row = mysqli_fetch_assoc($q)
 
                                 </ul>
                             </span>
+
                         <?php
 
                         } else {

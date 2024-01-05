@@ -50,19 +50,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $row1 = mysqli_fetch_assoc($result1);
             $total = mysqli_num_rows($result1);
 
-            $sql_total_credit = "SELECT SUM(Ecr) AS total_credit_hours FROM `results` NATURAL JOIN `student` WHERE `StudentID`='$StudentID' AND `Birthday` = '$Birthday'";
-            $result_total_credit = mysqli_query($conn, $sql_total_credit);
-            $row_total_credit = mysqli_fetch_assoc($result_total_credit);
 
-            $sql_total_grade = "SELECT SUM(Ecr*GradePoint) AS total_grade FROM `results` NATURAL JOIN `student` WHERE `StudentID`='$StudentID' AND `Birthday` = '$Birthday'";
-            $result_total_grade = mysqli_query($conn, $sql_total_grade);
-            $row_total_grade = mysqli_fetch_assoc($result_total_grade);
-
-
-            $cgpa = $row_total_grade['total_grade'] / $row_total_credit['total_credit_hours'];
 
 
             if ($total) {
+                $sql_total_credit = "SELECT SUM(Ecr) AS total_credit_hours FROM `results` NATURAL JOIN `student` WHERE `StudentID`='$StudentID' AND `Birthday` = '$Birthday'";
+                $result_total_credit = mysqli_query($conn, $sql_total_credit);
+                $row_total_credit = mysqli_fetch_assoc($result_total_credit);
+    
+                $sql_total_grade = "SELECT SUM(Ecr*GradePoint) AS total_grade FROM `results` NATURAL JOIN `student` WHERE `StudentID`='$StudentID' AND `Birthday` = '$Birthday'";
+                $result_total_grade = mysqli_query($conn, $sql_total_grade);
+                $row_total_grade = mysqli_fetch_assoc($result_total_grade);
+    
+    
+                $cgpa = $row_total_grade['total_grade'] / $row_total_credit['total_credit_hours'];
         ?>
                 <div class="row my-5">
                     <div class="col-md-9 mx-auto p-3">
