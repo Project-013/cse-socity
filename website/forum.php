@@ -6,13 +6,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $short_description =  $_POST['short_description'];
     $description =  $_POST['description'];
     $UserID =  $_POST['UserID'];
+    $post_img = "";
+    if (isset($_FILES['post_img']['name'])) {
+        $post_img =  $_FILES['post_img']['name'];
+        $tmp_name =  $_FILES['post_img']['tmp_name'];
+        $path = "img/";
+        if (!is_dir($path)) {
+            mkdir($path);
+        }
+        move_uploaded_file($tmp_name, $path . "/" . $post_img);
+    }
 
-    $sql = "INSERT INTO `forum`(`title`, `description`, `short_description`, `UserID`) VALUES ('$title','$description','$short_description','$UserID')";
+    $sql = "INSERT INTO `forum`(`title`, `description`, `short_description`, `UserID`,`post_img`) VALUES ('$title','$description','$short_description','$UserID','$post_img')";
 
     if (isset($_GET['ForumID'])) {
         $UpdateForumID = $_GET['ForumID'];
 
         $sql = "UPDATE `forum` SET `title` = '$title', `description` = '$description', `short_description` = '$short_description' WHERE `forum`.`ForumID` =  $UpdateForumID;";
+
+        if (isset($_FILES['post_img']['name'])) {
+            $sql = "UPDATE `forum` SET `title` = '$title', `description` = '$description', `short_description` = '$short_description', `post_img`='$post_img' WHERE `forum`.`ForumID` =  $UpdateForumID;";
+        }
     }
     $result = mysqli_query($conn, $sql);
     $redirect_url = "/cse-socity/website/forum.php";
@@ -39,6 +53,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php
 
                 $sql = "SELECT * FROM `forum` NATURAL JOIN user ORDER BY  `timestand` DESC";
+
+                if (isset($_GET['ForumID'])) {
+                    $sql = "SELECT * FROM `forum` NATURAL JOIN user WHERE `ForumID`=" . $_GET['ForumID'];
+                }
+
+
                 $result = mysqli_query($conn, $sql);
                 while ($row = mysqli_fetch_assoc($result)) {
                     $ForumID  = $row['ForumID'];
@@ -91,7 +111,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $result_love = mysqli_query($conn, $sql_love);
                         $total_love = mysqli_num_rows($result_love);
 
-                        $isLiked="";
+                        $isLiked = "";
                         $react_url = "";
                         if (isset($_SESSION["UserID"])) {
                             $UserID = $_SESSION["UserID"];
@@ -106,13 +126,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 $react_type = $row_react['type'];
                             }
                         }
- 
+
 
 
 
                 ?>
                         <div class="col-md-10 my-3" id="<?php echo 'forum' . $ForumID ?>">
                             <div class="card">
+                                <?php
+                                if ($row['post_img'] != "") {
+                                    $dlt_img_url = "";
+                                    if (isset($_GET['ForumID'])) {
+                                        $dlt_img_url = "/cse-socity/website/partials/_delete.php?remove_img=true&forum=" . $ForumID;
+                                ?>
+                                        <div class="d-flex justify-content-end"> <a href="<?php echo $dlt_img_url ?>" class="btn btn-sm btn-outline-danger">Remove Image</a></div>
+                                    <?php
+                                    }
+                                    ?>
+                                    <img src="/cse-socity/website/img/<?php echo $row['post_img']  ?>" alt="nothing found" class="card-img-top">
+                                <?php
+                                } ?>
 
                                 <div class="card-body">
                                     <?php
@@ -133,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
                                     ?>
-                                    <h4 class="card-title text-success"><?php echo $title ?></h4>
+                                    <h4 class="card-title text-success"><a class=" text-success" href="forum-post.php?id=<?php echo $ForumID ?>"><?php echo $title ?></a></h4>
                                     <h6 class=" text-muted">
                                         <?php
                                         if ($row['img']) {
@@ -170,7 +203,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     </a>
                                                     <a class="me-2 position-relative" href="<?php echo $dislike_url ?>">
                                                         <i class="fa fa-thumbs-down   fa-2x text-<?php if ($isLiked && $react_type == 'dislike') echo "primary";
-                                                                                                else echo "dark" ?> d-block" aria-hidden="true"></i>
+                                                                                                    else echo "dark" ?> d-block" aria-hidden="true"></i>
                                                         <?php if ($total_dislike) { ?>
                                                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                                                 <?php echo $total_dislike ?>
@@ -180,7 +213,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                     </a>
                                                     <a class="me-2 position-relative" href="<?php echo $love_url ?>">
                                                         <i class="fa fa-heart   fa-2x text-<?php if ($isLiked && $react_type == 'love') echo "danger";
-                                                                                                else echo "dark" ?> d-block" aria-hidden="true"></i>
+                                                                                            else echo "dark" ?> d-block" aria-hidden="true"></i>
                                                         <?php if ($total_love) { ?>
                                                             <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                                                 <?php echo $total_love ?>
@@ -228,6 +261,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         $Updatetitle    = $row3['title'];
                         $Updateshort_description    = $row3['short_description'];
                         $Updatedescription    = $row3['description'];
+                        $Update_post_img = $row3['post_img'];
                     }
                 }
 
@@ -253,7 +287,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                                                 echo "Updete";
                                                             } else echo "Create" ?> post</h4>
 
-                            <form class="text-muted" action="" method="post">
+                            <form class="text-muted" action="" method="post" enctype="multipart/form-data">
                                 <div class="row g-2 justify-content-center">
                                     <div class="form-floating  col-md-12">
                                         <input type="text" class="form-control _form_data" id="title" name="title" placeholder=" " required value="<?php if (isset($Updatetitle)) {
@@ -277,6 +311,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         <textarea class="form-control _form_data" id="description" name="description" placeholder=" " rows="6"><?php if (isset($Updatedescription)) {
                                                                                                                                                     echo $Updatedescription;
                                                                                                                                                 } ?></textarea>
+                                        <div class="col-12 my-3">
+                                            <label for="post_img">Upload Image</label>
+                                            <input type="file" class="form-control-file" id="post_img" name="post_img" accept=".png, .jpg, .jpeg" value="<?php if (isset($UpdatetUpdate_post_imgitle)) {
+                                                                                                                                                                echo $Update_post_img;
+                                                                                                                                                            } ?>">
+                                        </div>
                                     </div>
                                     <button id="submit" type="submit" class="btn btn-primary px-6 my-3"><?php if (isset($UpdateForumID)) {
                                                                                                             echo "Updete";

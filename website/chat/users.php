@@ -29,8 +29,19 @@ if (!isset($_SESSION['UserID'])) {
               $row = mysqli_fetch_assoc($sql);
             }
             ?>
-            <i class="fa fa-user-circle fa-2x m-0" aria-hidden="true"></i>
-            <div class="details ms-1">
+            <?php
+            if ($row['img']) {
+            ?>
+              <img src="/cse-socity/website/img/<?php echo $row['img']  ?>" alt="nothing found" width="20" height="20" class="d- mx-auto rounded-circle">
+            <?php
+            } else {
+            ?>
+              <i class="fa fa-user-circle fa-2x text-primary " aria-hidden="true"></i>
+
+            <?php
+            }
+            ?>
+            <div class="details ms-2">
               <span><?php echo $row['name'] ?></span>
               <p class="small"></p>
             </div>

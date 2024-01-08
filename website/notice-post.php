@@ -1,7 +1,10 @@
 <?php
 session_start();
 include '../database/database.php';
-
+if (!isset($_GET['id'])) {
+    header("location: /cse-socity/website/notice.php");
+  }
+  $NoticeID = $_GET['id'];
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -20,7 +23,7 @@ include '../database/database.php';
 
             <?php
 
-            $sql = "SELECT * FROM `notice` ORDER BY NoticeID DESC";
+            $sql = "SELECT * FROM `notice` WHERE `NoticeID`='$NoticeID'";
             $result = mysqli_query($conn, $sql);
             while ($row = mysqli_fetch_assoc($result)) {
                 $NoticeID    = $row['NoticeID'];
@@ -57,12 +60,14 @@ include '../database/database.php';
                     <div class="card">
 
                         <div class="card-body">
-                            <a href="notice-post.php?id=<?php echo $NoticeID ?>" class="card-title " ><?php echo $title ?> <span class="fw-normal">--<?php echo $post_time ?></span>
+                            <h5 class="card-title mb-3" ><?php echo $title ?> 
                                 
-                            </a>
+                            </h5>
+                            <p class="card-text"></b><?php echo $notice ?></p>
 
 
                         </div>
+                        <div class="card-footer"><span class="fw-normal small"><?php echo $post_time ?></span></div>
                     </div>
                 </div>
 

@@ -1,6 +1,11 @@
 <?php
 session_start();
 include '../database/database.php';
+
+
+if (!isset($_GET['id'])) {
+  header("location: /cse-socity/website/forum.php");
+}
 $ForumID = $_GET['id'];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -110,11 +115,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ?>
                     <div class="col-md-7">
                         <div class="card">
+                        <?php
+                                if ($row['post_img'] != "") {
+                                    ?>
+                                    <img src="/cse-socity/website/img/<?php echo $row['post_img']  ?>" alt="nothing found" class="card-img-top">
+                                <?php
+                                } ?>
                             <div class="card-body">
                                 <?php
                                 if (isset($_SESSION["UserID"]) && $Forum_UserID == $_SESSION["UserID"]) {
 
-                                    $update_url = "/cse-socity/website/forum.php?id=" . $ForumID;
+                                    $update_url = "/cse-socity/website/forum.php?ForumID=" . $ForumID;
                                     $dlt_url = "/cse-socity/website/partials/_delete.php?ForumID=" . $ForumID;
 
                                 ?>

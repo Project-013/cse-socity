@@ -2,8 +2,8 @@
     session_start();
     include '../../../database/database.php';
 
-    $outgoing_id = $_SESSION['userId'];
-    $searchTerm = mysqli_real_escape_string($con, $_POST['searchTerm']);
+    $outgoing_id = $_SESSION['UserID'];
+    $searchTerm = mysqli_real_escape_string($conn, $_POST['searchTerm']);
 
     $sql = "SELECT * FROM user WHERE NOT UserID = {$outgoing_id} AND (name LIKE '%{$searchTerm}%' OR name LIKE '%{$searchTerm}%') ";
     $output = "";

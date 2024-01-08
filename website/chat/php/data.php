@@ -14,10 +14,15 @@
         }
         ($row['active_status'] == "Offline now") ? $offline = "offline" : $offline = "";
         ($outgoing_id == $row['UserID']) ? $hid_me = "hide" : $hid_me = "";
+        if ($row['img']){
+            $img= '<img src="/cse-socity/website/img/'.$row['img'].'" alt="nothing found" width="20" height="20" class="d- mx-auto rounded-circle">';
+        }else{
+            $img= '<i class="fa fa-user-circle fa-2x m-0" aria-hidden="true"></i>';
+        }
 
         $output .= '<a class="text-decoration-none" href="chat.php?UserID='. $row['UserID'] .'">
                     <div class="content">
-                        <i class="fa fa-user-circle fa-2x m-0" aria-hidden="true"></i>
+                        '.$img.'
             
                         <div class="details">
                             <span>'.$row['name'] .'</span>

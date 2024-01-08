@@ -6,84 +6,88 @@
 
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-            $img =  $_FILES['image']['name'];
-            $tmp_name =  $_FILES['image']['tmp_name'];
-            $size =  $_FILES['image']['size'];
-            $ext = pathinfo($img, PATHINFO_EXTENSION);
-            if ($ext == 'jpg' or $ext == 'png' or $ext == 'jpeg') {
-                if ($size <= 104857600) {
+            $name =  $_POST['name'];
+            $email =  $_POST['email'];
+            $mobile =  $_POST['mobile'];
+            $gender =  $_POST['gender'];
+            $blood_group =  $_POST['blood_group'];
+            $birthday =  $_POST['birthday'];
+            $last_blood_donate =  $_POST['last_blood_donate'];
+            $address =  $_POST['address'];
+            $interests =  $_POST['interests'];
+            $skills =  $_POST['skills'];
+            $pass1 =  $_POST['password1'];
+            $pass2 =  $_POST['password2'];
 
-                    $name =  $_POST['name'];
-                    $email =  $_POST['email'];
-                    $mobile =  $_POST['mobile'];
-                    $gender =  $_POST['gender'];
-                    $blood_group =  $_POST['blood_group'];
-                    $birthday =  $_POST['birthday'];
-                    $last_blood_donate =  $_POST['last_blood_donate'];
-                    $address =  $_POST['address'];
-                    $interests =  $_POST['interests'];
-                    $skills =  $_POST['skills'];
-                    $pass1 =  $_POST['password1'];
-                    $pass2 =  $_POST['password2'];
+            $existsql = "SELECT * FROM `user` WHERE `email` = '$email'";
 
-                    $existsql = "SELECT * FROM `user` WHERE `email` = '$email'";
-
-                    $result = mysqli_query($conn, $existsql);
-                    $numRows = mysqli_num_rows($result);
+            $result = mysqli_query($conn, $existsql);
+            $numRows = mysqli_num_rows($result);
 
 
-                    if ($numRows > 0) {
+            if ($numRows > 0) {
 
         ?>
-                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            User already exist!
-                        </div>
-                        <?php
-                    } else {
-                        if ($pass1 == $pass2) {
-                            $hashpass = password_hash($pass1, PASSWORD_DEFAULT);
-                            $sql = "INSERT INTO `user` (`name`, `email`,`mobile`,`gender`,`blood_group`,`birthday`,`last_blood_donate`,`address`,`password`,`interests`,`skills`,`img`) VALUES ('$name', '$email','$mobile','$gender','$blood_group','$birthday','$last_blood_donate','$address','$hashpass','$interests','$skills','$img')";
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    User already exist!
+                </div>
+                <?php
+            } else {
+                if ($pass1 == $pass2) {
 
+
+                    $hashpass = password_hash($pass1, PASSWORD_DEFAULT);
+                    $sql = "INSERT INTO `user` (`name`, `email`,`mobile`,`gender`,`blood_group`,`birthday`,`last_blood_donate`,`address`,`password`,`interests`,`skills`) VALUES ('$name', '$email','$mobile','$gender','$blood_group','$birthday','$last_blood_donate','$address','$hashpass','$interests','$skills')";
+                    if (isset($_FILES['image']['name'])) {
+                        $img =  $_FILES['image']['name'];
+                        $tmp_name =  $_FILES['image']['tmp_name'];
+                        $size =  $_FILES['image']['size'];
+
+                        $sql = "INSERT INTO `user` (`name`, `email`,`mobile`,`gender`,`blood_group`,`birthday`,`last_blood_donate`,`address`,`password`,`interests`,`skills`,`img`) VALUES ('$name', '$email','$mobile','$gender','$blood_group','$birthday','$last_blood_donate','$address','$hashpass','$interests','$skills','$img')";
+                        if ($size <= 104857600) {
                             $result = mysqli_query($conn, $sql);
                             if ($result) {
                                 $path = "img/";
                                 if (!is_dir($path)) {
-                                  mkdir($path);
+                                    mkdir($path);
                                 }
                                 move_uploaded_file($tmp_name, $path . "/" . $img);
                                 $_SESSION["message"] = "<b>Signup Success!</b> You can login now";
                                 // echo 2;
-                        ?>
+                ?>
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                                     <b>Signup Success!</b> You can login now!
                                 </div>
                             <?php
                             }
                         } else {
-                            $showError = "Passwords do not match";
-                            echo $showError;
+                            $message = "Image should be or Less or Equal 10 MB!";
                             ?>
-                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                Passwords do not matched!
+                            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                Image should be or Less or Equal 10 MB!
+                            </div>
+                        <?php
+                        }
+                    } else {
+                        $result = mysqli_query($conn, $sql);
+                        if ($result) {
+                            $_SESSION["message"] = "<b>Signup Success!</b> You can login now";
+                        ?>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <b>Signup Success!</b> You can login now!
                             </div>
                     <?php
                         }
                     }
                 } else {
-                    $message = "Image should be or Less or Equal 10 MB!";
+                    $showError = "Passwords do not match";
+                    echo $showError;
                     ?>
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        Image should be or Less or Equal 10 MB!
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        Passwords do not matched!
                     </div>
                 <?php
                 }
-            } else {
-                $message = "Your file is invalid! Please upload PBG or JPG file";
-                ?>
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    Your file is invalid! Please upload PNG or JPG file
-                </div>
-            <?php
             }
         }
 
@@ -167,7 +171,7 @@
                                 </div>
                                 <div class="col-12">
                                     <label for="image">Select profile picture</label>
-                                    <input type="file" class="form-control-file" id="image" name="image" required>
+                                    <input type="file" class="form-control-file" id="image" name="image" accept=".png, .jpg, .jpeg">
                                 </div>
                                 <div class="col-12">
                                     <div class="form-check">
