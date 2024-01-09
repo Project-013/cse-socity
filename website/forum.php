@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $sql = "UPDATE `forum` SET `title` = '$title', `description` = '$description', `short_description` = '$short_description' WHERE `forum`.`ForumID` =  $UpdateForumID;";
 
-        if (isset($_FILES['post_img']['name'])) {
+        if (isset($_FILES['post_img']['name']) && $_FILES['post_img']['name']) {
             $sql = "UPDATE `forum` SET `title` = '$title', `description` = '$description', `short_description` = '$short_description', `post_img`='$post_img' WHERE `forum`.`ForumID` =  $UpdateForumID;";
         }
     }
@@ -38,6 +38,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="zxx">
 
 <head>
+    <link rel="stylesheet" href="https://unpkg.com/jodit@4.0.1/es2021/jodit.min.css" />
+    <script src="https://unpkg.com/jodit@4.0.1/es2021/jodit.min.js"></script>
+    <!-- Include Dropzone.js from CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.css" integrity="sha512-s/MP3wvxM8Cz+BVTWuNgvW5ldhbc6hZ6i/Q68wMAZL8e2I6/J7S+EgqjE1aVYzA2bKipF2c3lKQWv+xDfrneZQ==" crossorigin="anonymous" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.2/min/dropzone.min.js" integrity="sha512-9cF7LRkUjznaamxAGAo4uAHEWLO3s6sTg8+q4lAaW8L5fE5wGx+Js/F7y8rXUqvlkG3Ka2lMpsjlu+kmrE5Yvg==" crossorigin="anonymous"></script>
+
+    <style>
+        .previewIcon {
+            width: 38px;
+            height: 40px;
+            margin-right: 1px;
+        }
+    </style>
     <?php include 'header-link.php'; ?>
 </head>
 
@@ -132,59 +145,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 ?>
                         <div class="col-md-10 my-3" id="<?php echo 'forum' . $ForumID ?>">
-                            <div class="card">
-                                <?php
-                                if ($row['post_img'] != "") {
-                                    $dlt_img_url = "";
-                                    if (isset($_GET['ForumID'])) {
-                                        $dlt_img_url = "/cse-socity/website/partials/_delete.php?remove_img=true&forum=" . $ForumID;
-                                ?>
-                                        <div class="d-flex justify-content-end"> <a href="<?php echo $dlt_img_url ?>" class="btn btn-sm btn-outline-danger">Remove Image</a></div>
-                                    <?php
-                                    }
-                                    ?>
-                                    <img src="/cse-socity/website/img/<?php echo $row['post_img']  ?>" alt="nothing found" class="card-img-top">
-                                <?php
-                                } ?>
+                            <div class="card ">
+                                <div class="card-body row">
+                                    <div class="col-md-4 d-flex justify-content-center align-items-center">
+                                        <div>
+                                            <?php
+                                            if ($row['post_img'] != "") {
+                                                $dlt_img_url = "";
+                                                if (isset($_GET['ForumID'])) {
+                                                    $dlt_img_url = "/cse-socity/website/partials/_delete.php?remove_img=true&forum=" . $ForumID;
+                                            ?>
+                                                    <div class="d-flex justify-content-end"> <a href="<?php echo $dlt_img_url ?>" class="btn btn-sm btn-outline-danger">Remove Image</a></div>
+                                                <?php
+                                                }
+                                                ?>
+                                                <img src="/cse-socity/website/img/<?php echo $row['post_img']  ?>" alt="nothing found" class="card-img-top">
+                                            <?php
+                                            } else {
+                                            ?>
+                                               <i class="fa fa-5x fa-question"></i>
+                                            <?php
+                                            } ?>
+                                        </div>
 
-                                <div class="card-body">
-                                    <?php
-                                    if (isset($_SESSION["UserID"]) && $Forum_UserID == $_SESSION["UserID"]) {
-                                        $UserID = $_SESSION["UserID"];
-                                        $update_url = "/cse-socity/website/forum.php?ForumID=" . $ForumID;
-                                        $dlt_url = "/cse-socity/website/partials/_delete.php?ForumID=" . $ForumID;
-
-                                    ?>
-                                        <span class="d-flex justify-content-end">
-                                            <a href="<?php echo $update_url ?>" class="btn btn-sm btn-primary me-1"> <i class="fa fa-edit " aria-hidden="true"></i></a>
-                                            <a href="<?php echo $dlt_url ?>" class="btn btn-sm btn-danger "> <i class="fa fa-trash " aria-hidden="true"></i></a>
-
-                                        </span>
-
-                                    <?php
-                                    }
+                                    </div>
 
 
-                                    ?>
-                                    <h4 class="card-title text-success"><a class=" text-success" href="forum-post.php?id=<?php echo $ForumID ?>"><?php echo $title ?></a></h4>
-                                    <h6 class=" text-muted">
+                                    <div class="col-md-8">
                                         <?php
-                                        if ($row['img']) {
+                                        if (isset($_SESSION["UserID"]) && $Forum_UserID == $_SESSION["UserID"]) {
+                                            $UserID = $_SESSION["UserID"];
+                                            $update_url = "/cse-socity/website/forum.php?ForumID=" . $ForumID;
+                                            $dlt_url = "/cse-socity/website/partials/_delete.php?ForumID=" . $ForumID;
+
                                         ?>
-                                            <img src="/cse-socity/website/img/<?php echo $row['img']  ?>" alt="nothing found" width="20" height="20" class="d- mx-auto rounded-circle">
-                                        <?php
-                                        } else {
-                                        ?>
-                                            <i class="fa fa-user-circle  text-primary " aria-hidden="true"></i>
+                                            <span class="d-flex justify-content-end">
+                                                <a href="<?php echo $update_url ?>" class="btn btn-sm btn-primary me-1"> <i class="fa fa-edit " aria-hidden="true"></i></a>
+                                                <a href="<?php echo $dlt_url ?>" class="btn btn-sm btn-danger "> <i class="fa fa-trash " aria-hidden="true"></i></a>
+
+                                            </span>
 
                                         <?php
                                         }
+
+
                                         ?>
-                                        <?php echo $row['name'] ?>
-                                    </h6>
-                                    <hr>
-                                    <p class="card-text"></b><?php echo $short_description ?>...<a class="" href="forum-post.php?id=<?php echo $ForumID ?>">See more</a></p>
+                                        <h4 class="card-title text-success"><a class=" text-success" href="forum-post.php?id=<?php echo $ForumID ?>"><?php echo $title ?></a></h4>
+                                        <h6 class=" text-muted">
+                                            <?php
+                                            if ($row['img']) {
+                                            ?>
+                                                <img src="/cse-socity/website/img/<?php echo $row['img']  ?>" alt="nothing found" width="20" height="20" class="d- mx-auto rounded-circle">
+                                            <?php
+                                            } else {
+                                            ?>
+                                                <i class="fa fa-user-circle  text-primary " aria-hidden="true"></i>
+
+                                            <?php
+                                            }
+                                            ?>
+                                            <?php echo $row['name'] ?>
+                                        </h6>
+                                        <hr>
+                                        <p class="card-text"></b><?php echo $short_description ?>...<a class="" href="forum-post.php?id=<?php echo $ForumID ?>">See more</a></p>
+                                    </div>
                                 </div>
+
                                 <div class="card-footer bg-white d-flex justify-content-between">
                                     <div>
                                         <div>
@@ -308,15 +334,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     </div>
                                     <div class="col-12">
                                         <label for="description">Description*</label>
-                                        <textarea class="form-control _form_data" id="description" name="description" placeholder=" " rows="6"><?php if (isset($Updatedescription)) {
-                                                                                                                                                    echo $Updatedescription;
-                                                                                                                                                } ?></textarea>
+                                        <textarea class="form-control _form_data" id="editor" name="description" placeholder=" " rows="6"><?php if (isset($Updatedescription)) {
+                                                                                                                                                echo $Updatedescription;
+                                                                                                                                            } ?></textarea>
                                         <div class="col-12 my-3">
                                             <label for="post_img">Upload Image</label>
                                             <input type="file" class="form-control-file" id="post_img" name="post_img" accept=".png, .jpg, .jpeg" value="<?php if (isset($UpdatetUpdate_post_imgitle)) {
                                                                                                                                                                 echo $Update_post_img;
                                                                                                                                                             } ?>">
                                         </div>
+
                                     </div>
                                     <button id="submit" type="submit" class="btn btn-primary px-6 my-3"><?php if (isset($UpdateForumID)) {
                                                                                                             echo "Updete";
@@ -353,6 +380,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <?php include 'footer.php'; ?>
     <?php include 'footer-link.php'; ?>
+
+    <script>
+        const editor = Jodit.make('#editor');
+    </script>
+
+
 </body>
 
 

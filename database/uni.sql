@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 05, 2024 at 03:57 PM
+-- Generation Time: Jan 09, 2024 at 05:14 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -201,7 +201,8 @@ CREATE TABLE `campaigns` (
 
 INSERT INTO `campaigns` (`CampaignID`, `title`, `img`, `goals`, `raised`, `description`, `timestand`) VALUES
 (5, 'Education 1', 'education.png', 5000, 6076, 'We help local nonprofit access the funding tools , training and support the community. It is a great way for donors to get involved with your organization from anywhere in the world.', NULL),
-(6, 'Refuse Shelter', 'foodCharity.png', 10000, 2000, 'We help local nonprofit access the funding tools , training and support the community. It is a great way for donors to get involved with your organization from anywhere in the world.', NULL);
+(6, 'Refuse Shelter', 'foodCharity.png', 10000, 2000, 'We help local nonprofit access the funding tools , training and support the community. It is a great way for donors to get involved with your organization from anywhere in the world.', NULL),
+(8, 'Refuse Shelter', 'Screenshot 2023-09-13 163650.png', 5000, 0, 'Refuse Shelter', NULL);
 
 -- --------------------------------------------------------
 
@@ -336,17 +337,18 @@ CREATE TABLE `forum` (
   `description` text NOT NULL,
   `short_description` varchar(255) NOT NULL,
   `status` varchar(10) NOT NULL DEFAULT 'pending',
-  `timestand` timestamp NOT NULL DEFAULT current_timestamp()
+  `timestand` timestamp NOT NULL DEFAULT current_timestamp(),
+  `post_img` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `forum`
 --
 
-INSERT INTO `forum` (`ForumID`, `title`, `UserID`, `description`, `short_description`, `status`, `timestand`) VALUES
-(16, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'approved', '2023-12-26 05:37:42'),
-(17, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'approved', '2023-12-26 05:37:54'),
-(18, 'r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.', 1, 'r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.', 'r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.', 'approved', '2023-12-26 06:50:21');
+INSERT INTO `forum` (`ForumID`, `title`, `UserID`, `description`, `short_description`, `status`, `timestand`, `post_img`) VALUES
+(16, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'approved', '2023-12-26 05:37:42', NULL),
+(17, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 1, 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, omnis.', 'approved', '2023-12-26 05:37:54', NULL),
+(18, 'r adipisicing elit. Quia, omnis.', 1, '<ul><li><em>r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.</em></li></ul>', 'r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.r adipisicing elit. Quia, omnis.Lorem ipsum dolor sit amet consectetur adipisicing elit.', 'approved', '2023-12-26 06:50:21', 'Screenshot 2023-09-13 163650.png');
 
 -- --------------------------------------------------------
 
@@ -439,7 +441,8 @@ INSERT INTO `messages` (`msg_id`, `incoming_msg_id`, `outgoing_msg_id`, `msg`) V
 (17, 1, 5, 'hi'),
 (18, 5, 1, 'hello'),
 (19, 1, 5, 'how are you'),
-(20, 5, 1, 'fine');
+(20, 5, 1, 'fine'),
+(21, 4, 1, 'hello');
 
 -- --------------------------------------------------------
 
@@ -473,16 +476,17 @@ CREATE TABLE `notice` (
   `NoticeID` int(11) NOT NULL,
   `notice` text NOT NULL,
   `timestamp` timestamp NOT NULL DEFAULT current_timestamp(),
-  `title` varchar(255) NOT NULL
+  `title` varchar(255) NOT NULL,
+  `img` varchar(255) DEFAULT NULL,
+  `pdf` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `notice`
 --
 
-INSERT INTO `notice` (`NoticeID`, `notice`, `timestamp`, `title`) VALUES
-(2, 'Notice of Holy ChristmasNotice of Holy ChristmasNotice of Holy ChristmasNotice of Holy ChristmasNotice of Holy ChristmasNotice of Holy ChristmasNotice of Holy Christmas', '2023-12-27 12:16:21', 'Notice of Holy Christmas'),
-(4, 'Notice of Holy ChristmasNotice of Holy ChristmasNotice of Holy Christmas', '2023-12-27 12:31:22', 'Notice of Holy ChristmasNotice of Holy Christmas');
+INSERT INTO `notice` (`NoticeID`, `notice`, `timestamp`, `title`, `img`, `pdf`) VALUES
+(13, '<p>set5r</p>', '2024-01-09 15:41:05', 'Amnis.Lorem ipsum dolor ', 'Screenshot 2023-09-13 163650.png', 'BSc. Engg. in CSE.pdf');
 
 -- --------------------------------------------------------
 
@@ -600,7 +604,8 @@ INSERT INTO `react` (`ReactID`, `UserID`, `ForumID`, `CommentID`, `type`) VALUES
 (93, 5, 17, NULL, 'like'),
 (94, 5, NULL, 10, 'like'),
 (103, 5, 18, NULL, 'love'),
-(104, 5, NULL, 11, 'like');
+(104, 5, NULL, 11, 'like'),
+(105, 1, 18, NULL, 'love');
 
 -- --------------------------------------------------------
 
@@ -1134,7 +1139,7 @@ ALTER TABLE `admins`
 -- AUTO_INCREMENT for table `campaigns`
 --
 ALTER TABLE `campaigns`
-  MODIFY `CampaignID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `CampaignID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `comments`
@@ -1188,7 +1193,7 @@ ALTER TABLE `members`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `msg_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `newslatter`
@@ -1200,7 +1205,7 @@ ALTER TABLE `newslatter`
 -- AUTO_INCREMENT for table `notice`
 --
 ALTER TABLE `notice`
-  MODIFY `NoticeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `NoticeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `photo_sliders`
@@ -1224,7 +1229,7 @@ ALTER TABLE `projects`
 -- AUTO_INCREMENT for table `react`
 --
 ALTER TABLE `react`
-  MODIFY `ReactID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `ReactID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `research`

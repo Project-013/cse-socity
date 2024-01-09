@@ -3,8 +3,8 @@ session_start();
 include '../database/database.php';
 if (!isset($_GET['id'])) {
     header("location: /cse-socity/website/notice.php");
-  }
-  $NoticeID = $_GET['id'];
+}
+$NoticeID = $_GET['id'];
 ?>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -40,7 +40,7 @@ if (!isset($_GET['id'])) {
                 $hours = $interval->format('%h');
                 $min = $interval->format('%i');
                 $post_time = "Just now";
-        
+
                 if ($year > 0) {
                     $post_time = $year . ' yers ago';
                 } else if ($months > 0) {
@@ -60,11 +60,23 @@ if (!isset($_GET['id'])) {
                     <div class="card">
 
                         <div class="card-body">
-                            <h5 class="card-title mb-3" ><?php echo $title ?> 
-                                
-                            </h5>
-                            <p class="card-text"></b><?php echo $notice ?></p>
+                            <h5 class="card-title mb-3"><?php echo $title ?>
 
+                            </h5>
+                            <hr>
+                            <?php
+                            if ($row['img'] != "") {
+                            ?>
+                                <img src="/cse-socity/admin/pages/img/<?php echo $row['img']  ?>" alt="nothing found" class="card-img-top">
+                            <?php
+                            } ?>
+                            <p class="card-text"></b><?php echo $notice ?></p>
+                            <?php
+                            if ($row['pdf'] != "") {
+                            ?>
+                                <a href="/cse-socity/admin/pages/pdf/<?php echo $row['pdf']  ?>" target="_blonk">click Here</a>
+                            <?php
+                            } ?>
 
                         </div>
                         <div class="card-footer"><span class="fw-normal small"><?php echo $post_time ?></span></div>

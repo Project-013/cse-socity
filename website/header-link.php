@@ -32,4 +32,7 @@
 
 <link rel="stylesheet" href="../public/all/website/assets/css/responsive.css">
 <link rel="icon" type="image/png" href="../public/all/website/assets/images/favicon.png">
+
+
+
 <title>CSE SOCITY</title>

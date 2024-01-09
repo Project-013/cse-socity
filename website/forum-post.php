@@ -4,7 +4,7 @@ include '../database/database.php';
 
 
 if (!isset($_GET['id'])) {
-  header("location: /cse-socity/website/forum.php");
+    header("location: /cse-socity/website/forum.php");
 }
 $ForumID = $_GET['id'];
 
@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $result_react = mysqli_query($conn, $sql_react);
                     $total_react = mysqli_num_rows($result_react);
 
-                    
+
                     $sql_like = "SELECT * FROM `react`  WHERE `ForumID`='$ForumID' AND `type`='like'";
                     $result_like = mysqli_query($conn, $sql_like);
                     $total_like = mysqli_num_rows($result_like);
@@ -115,12 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ?>
                     <div class="col-md-7">
                         <div class="card">
-                        <?php
-                                if ($row['post_img'] != "") {
-                                    ?>
-                                    <img src="/cse-socity/website/img/<?php echo $row['post_img']  ?>" alt="nothing found" class="card-img-top">
-                                <?php
-                                } ?>
+   
                             <div class="card-body">
                                 <?php
                                 if (isset($_SESSION["UserID"]) && $Forum_UserID == $_SESSION["UserID"]) {
@@ -140,6 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                                 ?>
                                 <h4 class="card-title text-success"><?php echo $title ?></h4>
+                                
                                 <h6 class=" text-muted">
                                     <?php
                                     if ($row['img']) {
@@ -157,6 +153,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <?php echo $row['name'] ?>
                                 </h6>
                                 <hr>
+
+                                <?php
+                            if ($row['post_img'] != "") {
+                            ?>
+                                <img src="/cse-socity/website/img/<?php echo $row['post_img']  ?>" alt="nothing found" class="card-img-top">
+                            <?php
+                            } ?>
 
                                 <p class="card-text"></b><?php echo $description ?></p>
                             </div>
@@ -197,7 +200,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                             </a>
 
                                         </div>
-                              
+
                                     </div>
 
                                 </div>

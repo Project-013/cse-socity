@@ -9,7 +9,6 @@ if (isset($_POST['updateTitle'])) {
 
     $sql = "UPDATE `campaigns` SET `title` = '$title', `description`='$description' WHERE `CampaignID` =$CampaignID";
     $result = mysqli_query($conn, $sql);
-
 }
 
 $CampaignID  = $_GET['p'];
@@ -22,16 +21,6 @@ $title =  $row['title'];
 $description =  $row['description'];
 // $action_url = $root_url . "/admin/campaigns/_config.php";
 
-
-if (isset($result)) {
-
-?>
-    <div class="alert alert-success alert-dismissible fade show text-center" role="alert">
-    Campaigns updated
-    </div>
-<?php
-
-}
 ?>
 
 
@@ -49,7 +38,6 @@ if (isset($result)) {
                 <label for="address">Description</label>
                 <textarea class="form-control _form_data" id="description" name="description" placeholder=" " rows="3"><?php echo $description ?></textarea>
             </div>
-
 
             <button type="submit" id="submit" class="btn btn-dark btn-sm my-3 w-100 fw-bold">Update campaigns</button>
         </form>

@@ -62,7 +62,7 @@ if (isset($_POST['newTitle'])) {
         $description = $row['description'];
         $root_url = "SSC";
         $dlt_url = 'campaigns/delete.php?CampaignID=' . $CampaignID;
-        $update_url = '/cse-socity/admin/pages/index.php?page=campaign-update&p='.$CampaignID;
+        $update_url = '/cse-socity/admin/pages/index.php?page=campaign-update&p=' . $CampaignID;
 
       ?>
         <tr class=" text-dark">
@@ -117,9 +117,13 @@ if (isset($_POST['newTitle'])) {
           <label for="newTitle">Goals</label>
           <input type="text" class="form-control _form_data" id="goals" name="goals" placeholder=" " required>
         </div>
-        <div class="form-group my-2">
-          <label for="image">Select image</label>
-          <input type="file" class="form-control-file" id="image" name="image">
+
+        <div class="card">
+          <div class="card-body">
+          <label for="image">Upload Image</label>
+            <input type="file" class="dropify" name="image" accept=".png, .jpg, .jpeg"  id="input-file-now-custom-1" data-default-file="" data-height="100" />
+ 
+          </div>
         </div>
         <button type="submit" id="submit" class="btn btn-dark btn-sm my-3 w-100 fw-bold">Add campaigns</button>
       </form>
