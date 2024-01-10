@@ -1,4 +1,8 @@
 <?php
+$StudentID= "";
+if(isset($_GET['StudentID']) && $_GET['StudentID']){
+  $StudentID = $_GET['StudentID'];
+}
 ?>
 
 
@@ -8,6 +12,11 @@
       <div class="d-flex justify-content-between">
         <h4 class="fw-normal heading_color">Students</h4>
         <div>
+        <form action="" method="GET">
+            <input type="search" name="page" value="student" id="" class="d-none">
+            <input type="search" name="StudentID" id="" value="<?php echo $StudentID ?>">
+            <button type="submit">search</button>
+          </form>
           <a class="btn btn-sm btn-outline-dark" href="index.php?page=student-action">Add new</a>
         </div>
 
@@ -28,6 +37,10 @@
 
         <?php
         $sql = "SELECT * FROM `student` ORDER BY  `StudentID` DESC";
+        if($StudentID){
+          $sql = "SELECT * FROM `student`  WHERE `StudentID`='$StudentID' ";
+
+        }
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
           $dlt_url = 'student/delete.php?StudentID='.$row['StudentID'];

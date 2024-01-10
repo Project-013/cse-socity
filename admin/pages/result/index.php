@@ -1,4 +1,9 @@
 <?php
+
+$StudentID= "";
+if(isset($_GET['StudentID']) && $_GET['StudentID']){
+  $StudentID = $_GET['StudentID'];
+}
 ?>
 
 
@@ -6,8 +11,13 @@
   <div class="table-responsive my-4 bg-light shadow p-3 rounded">
     <table class="table  border border-top-0 text-dark " style="font-size: 13px;">
       <div class="d-flex justify-content-between">
-        <h4 class="fw-normal heading_color">Results</h4>
+        <h4 class="fw-normal heading_color">Results </h4>
         <div>
+          <form action="" method="GET">
+            <input type="search" name="page" value="result" id="" class="d-none">
+            <input type="search" name="StudentID" id="" value="<?php echo $StudentID ?>">
+            <button type="submit">search</button>
+          </form>
           <a class="btn btn-sm btn-outline-dark" href="index.php?page=result-action">Add new</a>
         </div>
 
@@ -32,7 +42,12 @@
       <tbody class="text-secondary bg-light">
 
         <?php
+
         $sql = "SELECT * FROM `results` NATURAL JOIN `student` ORDER BY  `ResultID` DESC";
+        if($StudentID){
+          $sql = "SELECT * FROM `results` NATURAL JOIN `student` WHERE `StudentID`='$StudentID' ORDER BY  `ResultID` DESC";
+
+        }
         $result = mysqli_query($conn, $sql);
         while ($row = mysqli_fetch_assoc($result)) {
           $dlt_url = 'result/delete.php?ResultID=' . $row['ResultID'];

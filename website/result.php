@@ -62,8 +62,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $result_total_grade = mysqli_query($conn, $sql_total_grade);
                 $row_total_grade = mysqli_fetch_assoc($result_total_grade);
     
-    
-                $cgpa = $row_total_grade['total_grade'] / $row_total_credit['total_credit_hours'];
+                $cgpa ="";
+                if($row_total_grade['total_grade'] && $row_total_credit['total_credit_hours']){
+                    $cgpa = $row_total_grade['total_grade'] / $row_total_credit['total_credit_hours'];
+                    $cgpa =  number_format($cgpa, 2);
+                }
+                
         ?>
                 <div class="row my-5">
                     <div class="col-md-9 mx-auto p-3">
@@ -77,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         </div>
                                         <div class="col-md-6">
                                             <h6 class="">Program: <span class="fw-normal"><?php echo $row1['Program'] ?></span> </h6>
-                                            <h6 class="">CGPA: <span class="fw-normal"><?php echo number_format($cgpa, 2) ?></span> </h6>
+                                            <h6 class="">CGPA: <span class="fw-normal"><?php echo $cgpa ?></span> </h6>
                                         </div>
                                     </div>
                                 </div>
