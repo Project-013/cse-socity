@@ -106,9 +106,9 @@
 <?php } ?>
 <?php if ($current_page == "news") { ?>
 
-<div class="page-banner-area bg-1" style="max-height: ;">
+<div class="page-banner-area bg-2" >
     <div class="container">
-        <div class="page-banner-content">
+        <div class="page-banner-content" >
             <h1>News</h1>
             <ul>
                 <li><a href="index.php">Home</a></li>

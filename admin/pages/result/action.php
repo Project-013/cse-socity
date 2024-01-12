@@ -11,6 +11,7 @@ $gradeRanges = [
     'B-' => "2.75",
     'C+' => "2.50",
     'C' => "2.25",
+    'D' => "2.00",
     'F' => "0.00",
 ];
 
@@ -46,8 +47,8 @@ if (isset($_FILES['csv'])) {
         echo "Error: " . $_FILES["csv"]["error"];
     } else {
         // Read CSV file
-        $file = $_FILES["csv"]["name"];
-        $handle = fopen($file, "r");
+        $tmp_name =  $_FILES['csv']['tmp_name'];
+        $handle = fopen($tmp_name, "r");
 
         // Open the CSV file for reading
 
@@ -57,10 +58,22 @@ if (isset($_FILES['csv'])) {
             while (($row = fgetcsv($handle)) !== false) {
                 // $row is an array containing the fields in the current row
                 // Process the data as needed
+
                 if ($row[0] != 'Student ID') {
-                    $sql = "INSERT INTO `results`(`StudentID`, `Semester`,  `CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`) VALUES ('$row[0]','$row[7]','$row[1]','$row[6]','$row[2]','$row[3]','$row[4]','$row[5]')";
+                    $StudentID =  $row[0];
+                    $Semester =  $row[6];
+                    $CourseCode =  $row[1];
+                    $CourseTitle =  $row[5];
+                    $Credit =  $row[2];
+                    $Ecr =  $row[3];
+                    $LetterGrade =  $row[4];
+                    $GradePoint = $gradeRanges[$LetterGrade];
+                    $sql = "INSERT INTO `results`(`StudentID`, `Semester`,`CourseCode`, `CourseTitle`, `Credit`, `Ecr`, `LetterGrade`, `GradePoint`) VALUES ('$StudentID','$Semester','$CourseCode','$CourseTitle','$Credit','$Ecr','$LetterGrade','$GradePoint')";
                     $result = mysqli_query($conn, $sql);
-                    echo $sql;
+                    // echo $sql;
+                    // echo "<br>";
+
+
                 }
             }
 

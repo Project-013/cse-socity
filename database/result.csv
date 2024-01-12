@@ -1,30 +1,30 @@
-Student ID,Course Code,Credit,Ecr,Letter Grade,Grade Point,Course Title,Semester
-1.50203E+11,CSE-214,1.5,0,F,0,Electronic Devices and Circuits Lab,1
-1.50203E+11,CSE-313,3,0,F,0,Database System,1
-1.50203E+11,CSE-314,1.5,1.5,D,2,Database System Lab,1
-1.50203E+11,CSE-325,3,0,F,0,Computer Networking,1
-1.50203E+11,CSE-333,3,0,F,0,Software Engineering,1
-1.50203E+11,CSE-431,3,0,F,0,Digital Signal  Processing,1
-1.50203E+11,CSE-432,1.5,1.5,C,2.25,Digital Signal  Processing Lab,1
-1.50203E+11,CSE-455,3,0,F,0,Machine Learning,1
-1.50203E+11,CSE-456,1.5,0,F,0,Machine Learning Lab,1
-1.50203E+11,CSE-411,3,3,B,3,Artificial Intelligence,1
-1.60103E+11,CSE-411,3,3,B+,3.25,Artificial Intelligence,1
-1.60203E+11,CSE-212,1.5,0,F,0,Object Oriented Programming Language Lab,1
-1.60203E+11,CSE-456,1.5,0,F,0,Machine Learning Lab,1
-1.60203E+11,CSE-332,1.5,0,F,0,Operating System and System Programming,1
-1.60203E+11,CSE-335,3,0,F,0,Technical Writing And Presentation,1
-1.60203E+11,CSE-421,3,0,F,0,Compiler Construction,1
-1.60203E+11,CSE-422,1.5,0,F,0,Compiler Construction Lab,1
-1.60203E+11,CSE-431,3,0,F,0,Digital Signal  Processing,1
-1.60203E+11,CSE-432,1.5,0,F,0,Digital Signal  Processing Lab,1
-1.60203E+11,CSE-455,3,0,F,0,Machine Learning,1
-1.70103E+11,CSE-432,1.5,1.5,A+,4,Digital Signal  Processing Lab,1
-1.70103E+11,CSE-449,3,3,B+,3.25,Bio-Informatics,1
-1.70103E+11,CSE-450,1.5,1.5,A-,3.5,Bio-Informatics Lab,1
-1.70103E+11,MAT-103,3,3,B,3,"Matrices, Vector Analysis and Geometry",1
-1.70103E+11,MAT-201,3,3,A-,3.5,Numerical Methods,1
-1.70103E+11,CSE-331,3,3,A,3.75,Operating System and System Programming,1
-1.70103E+11,CSE-402,2,2,A-,3.5,Thesis/ Project II,1
-1.70103E+11,CSE-404,1.5,1.5,B+,3.25,Viva Voce,1
-1.70103E+11,CSE-431,3,3,A,3.75,Digital Signal  Processing,1
+Student ID,Course Code,Credit,Ecr,Letter Grade,Course Title,Semester
+150203020018,CSE-214,1.5,0,F,Electronic Devices and Circuits Lab,5
+150203020018,CSE-313,3,0,F,Database System,5
+150203020018,CSE-314,1.5,1.5,D,Database System Lab,1
+150203020018,CSE-325,3,0,F,Computer Networking,5
+150203020018,CSE-333,3,0,F,Software Engineering,5
+150203020018,CSE-431,3,0,F,Digital Signal  Processing,5
+150203020018,CSE-432,1.5,1.5,C,Digital Signal  Processing Lab,5
+150203020018,CSE-455,3,0,F,Machine Learning,5
+150203020018,CSE-456,1.5,0,F,Machine Learning Lab,1
+150203020018,CSE-411,3,3,B,Artificial Intelligence,1
+160103020079,CSE-411,3,3,B+,Artificial Intelligence,5
+160203020013,CSE-212,1.5,0,F,Object Oriented Programming Language Lab,1
+160203020013,CSE-456,1.5,0,F,Machine Learning Lab,5
+160203020013,CSE-332,1.5,0,F,Operating System and System Programming,1
+160203020013,CSE-335,3,0,F,Technical Writing And Presentation,1
+160203020013,CSE-421,3,0,F,Compiler Construction,5
+160203020013,CSE-422,1.5,0,F,Compiler Construction Lab,1
+160203020013,CSE-431,3,0,F,Digital Signal  Processing,1
+160203020013,CSE-432,1.5,0,F,Digital Signal  Processing Lab,1
+160203020013,CSE-455,3,0,F,Machine Learning,1
+170103020055,CSE-432,1.5,1.5,A+,Digital Signal  Processing Lab,1
+170103020055,CSE-449,3,3,B+,Bio-Informatics,1
+170103020055,CSE-450,1.5,1.5,A-,Bio-Informatics Lab,1
+170103020055,MAT-103,3,3,B,"Matrices, Vector Analysis and Geometry",1
+170103020055,MAT-201,3,3,A-,Numerical Methods,1
+170103020055,CSE-331,3,3,A,Operating System and System Programming,1
+170103020055,CSE-402,2,2,A-,Thesis/ Project II,1
+170103020055,CSE-404,1.5,1.5,B+,Viva Voce,1
+170103020055,CSE-431,3,3,A,Digital Signal  Processing,5
